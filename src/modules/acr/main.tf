@@ -47,9 +47,9 @@ resource "azurerm_container_registry_webhook" "webhook" {
   resource_group_name = var.ACR_RG_NAME
   registry_name       = azurerm_container_registry.helium-acr.name
 
-  service_uri = "https://${var.NAME}.scm.azurewebsites.net/docker/hook"
+  service_uri = "https://${var.LANG}.scm.azurewebsites.net/docker/hook"
   status      = "enabled"
-  scope       = "helium-${var.NAME}:latest"
+  scope       = "helium-${var.LANG}:latest"
   actions     = ["push"]
   custom_headers = {
     "Content-Type" = "application/json"

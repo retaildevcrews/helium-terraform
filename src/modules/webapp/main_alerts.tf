@@ -102,7 +102,7 @@ resource "azurerm_monitor_metric_alert" "Healthz-webtest-alert" {
   }
 }
 resource "azurerm_monitor_metric_alert" "Requests-below1-alert" {
-  name                = "${var.NAME}-appinsights-Requests-below1-Alert"
+  name                = "${var.NAME}-Requests-below1-Alert"
   resource_group_name = var.APP_RG_NAME
   scopes              = [azurerm_application_insights.helium.id]
   frequency           = var.WV_FREQUENCY
