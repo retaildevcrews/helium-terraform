@@ -15,7 +15,7 @@ variable "ACR_SP_ID" {
 
 variable "ACR_SP_SECRET" {
   type        = string
-  description = "The ACR Service Secret"
+  description = "The ACR Service Principal Secret"
 }
 
 variable "LOCATION" {
