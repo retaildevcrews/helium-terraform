@@ -107,7 +107,7 @@ resource "azurerm_monitor_metric_alert" "Requests-below1-alert" {
   scopes              = [azurerm_application_insights.helium.id]
   frequency           = var.WV_FREQUENCY
   window_size         = var.WV_WINDOW_SIZE
-  description         = "Max Requests below 1."
+  description         = "Requests below 1"
   severity            = var.WV_SEVERITY
   auto_mitigate       = "false"
   enabled             = "true"
