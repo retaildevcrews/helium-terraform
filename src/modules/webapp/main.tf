@@ -101,7 +101,7 @@ resource azurerm_app_service helium-webapp {
 }
 
 output "APP_SERVICE_DONE" {
-  depends_on  = [ azurerm_app_service.helium-webapp ]
+  depends_on  = [azurerm_app_service.helium-webapp]
   value       = true
   description = "App Service setup is complete"
 }

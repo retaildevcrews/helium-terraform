@@ -60,12 +60,13 @@ resource "azurerm_resource_group" "tfstate" {
 }
 
 module "acr" {
-  source      = "../modules/acr"
-  NAME        = var.NAME
-  LOCATION    = var.LOCATION
-  LANGUAGE    = var.LANGUAGE
-  ACR_RG_NAME = azurerm_resource_group.helium-acr.name
-  ACR_SP_ID   = var.ACR_SP_ID
+  source        = "../modules/acr"
+  NAME          = var.NAME
+  LOCATION      = var.LOCATION
+  LANGUAGE      = var.LANGUAGE
+  ACR_RG_NAME   = azurerm_resource_group.helium-acr.name
+  ACR_SP_ID     = var.ACR_SP_ID
+  ACR_SP_SECRET = var.ACR_SP_SECRET
 }
 
 module "db" {
@@ -86,6 +87,7 @@ module "web" {
   ACR_SP_ID         = var.ACR_SP_ID
   ACR_SP_SECRET     = var.ACR_SP_SECRET
   APP_RG_NAME       = azurerm_resource_group.helium-app.name
+  TFSTATE_RG_NAME   = azurerm_resource_group.tfstate.name
   TENANT_ID         = var.TF_TENANT_ID
   COSMOS_RG_NAME    = "${module.db.COSMOS_RG_NAME}"
   COSMOS_URL        = "https://${var.NAME}.documents.azure.com:443/"
@@ -111,6 +113,11 @@ module "web" {
   WT_SEVERITY       = var.WT_SEVERITY
   WT_THRESHOLD      = var.WT_THRESHOLD
   WT_OPERATOR       = var.WT_OPERATOR
+  WV_FREQUENCY      = var.WT_FREQUENCY
+  WV_WINDOW_SIZE    = var.WT_WINDOW_SIZE
+  WV_SEVERITY       = var.WT_SEVERITY
+  WV_THRESHOLD      = var.WT_THRESHOLD
+  WV_OPERATOR       = var.WT_OPERATOR
 }
 
 module "aci" {

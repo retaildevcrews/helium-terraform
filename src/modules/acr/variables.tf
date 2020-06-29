@@ -13,6 +13,11 @@ variable "ACR_SP_ID" {
   description = "The ACR Service Principal"
 }
 
+variable "ACR_SP_SECRET" {
+  type        = string
+  description = "The ACR Service Secret"
+}
+
 variable "LOCATION" {
   type        = string
   description = "The Azure Region in which all resources in this example should be created."

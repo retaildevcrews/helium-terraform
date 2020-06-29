@@ -75,7 +75,7 @@ resource null_resource imdb-import {
 }
 
 output "IMDB_IMPORT_DONE" {
-  depends_on  = [ null_resource.imdb-import ]
+  depends_on  = [null_resource.imdb-import]
   value       = true
   description = "imdb-import complete"
 }

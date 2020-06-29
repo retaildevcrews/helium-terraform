@@ -32,13 +32,13 @@ output "acr" {
 
 resource null_resource acr-access {
   provisioner "local-exec" {
-    command  = "az role assignment create --scope ${azurerm_container_registry.helium-acr.id} --role acrpull --assignee ${var.ACR_SP_ID}"
+    command = "az role assignment create --scope ${azurerm_container_registry.helium-acr.id} --role acrpull --assignee ${var.ACR_SP_ID}"
   }
 }
 
 resource null_resource acr-import {
   provisioner "local-exec" {
-    command  = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/helium-${var.LANGUAGE}:stable --image helium-${var.LANGUAGE}:latest --username ${var.ACR_SP_ID} --password ${var.ACR_SP_SECRET}"
+    command = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/helium-${var.LANGUAGE}:stable --image helium-${var.LANGUAGE}:latest --username ${var.ACR_SP_ID} --password ${var.ACR_SP_SECRET}"
   }
 }
 resource "azurerm_container_registry_webhook" "webhook" {

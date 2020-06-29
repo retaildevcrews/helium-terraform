@@ -57,6 +57,11 @@ variable "ACR_SP_SECRET" {
   description = "The ACR Service Principal secret"
 }
 
+variable "TFSTATE_RG_NAME" {
+  type        = string
+  description = "The Azure Resource Group the tfstate files should be added to"
+}
+
 variable "LANGUAGE" {
   type        = string
   description = "The helium language repo"
@@ -142,3 +147,24 @@ variable "WT_OPERATOR" {
   type        = string
   description = "(Required) The criteria operator. Possible values are Equals, NotEquals, GreaterThan, GreaterThanOrEqual, LessThan and LessThanOrEqual."
 }
+variable "WV_FREQUENCY" {
+  type        = string
+  description = "The evaluation frequency of this Metric Alert, represented in ISO 8601 duration format. Possible values are PT1M, PT5M, PT15M, PT30M and PT1H. Defaults to PT1M"
+}
+variable "WV_WINDOW_SIZE" {
+  type        = string
+  description = "The period of time that is used to monitor alert activity, represented in ISO 8601 duration format. This value must be greater than frequency. Possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and P1D. Defaults to PT5M. "
+}
+variable "WV_SEVERITY" {
+  type        = number
+  description = "The severity of this Metric Alert. Possible values are 0, 1, 2, 3 and 4. Defaults to 3. "
+}
+variable "WV_THRESHOLD" {
+  type        = string
+  description = "(Required) The criteria threshold value that activates the alert. "
+}
+variable "WV_OPERATOR" {
+  type        = string
+  description = "(Required) The criteria operator. Possible values are Equals, NotEquals, GreaterThan, GreaterThanOrEqual, LessThan and LessThanOrEqual."
+}
+
