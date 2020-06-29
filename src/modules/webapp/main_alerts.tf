@@ -102,10 +102,9 @@ resource "azurerm_monitor_metric_alert" "Healthz-webtest-alert" {
   }
 }
 resource "azurerm_monitor_metric_alert" "Requests-below1-alert" {
-  for_each            = var.INSTANCES
-  name                = "${each.key}-appinsights-Requests-below1-Alert"
+  name                = "${var.NAME}-appinsights-Requests-below1-Alert"
   resource_group_name = var.APP_RG_NAME
-  scopes              = [azurerm_application_insights.helium[each.key].id]
+  scopes              = [azurerm_application_insights.helium.id]
   frequency           = var.WV_FREQUENCY
   window_size         = var.WV_WINDOW_SIZE
   description         = "Max Requests below 1."
