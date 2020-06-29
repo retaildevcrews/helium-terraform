@@ -41,3 +41,17 @@ resource null_resource acr-import {
     command  = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/helium-${var.LANGUAGE}:stable --image helium-${var.LANGUAGE}:latest --username ${var.ACR_SP_ID} --password ${var.ACR_SP_SECRET}"
   }
 }
+resource "azurerm_container_registry_webhook" "webhook" {
+  name                = var.NAME
+  location            = var.LOCATION
+  resource_group_name = var.ACR_RG_NAME
+  registry_name       = azurerm_container_registry.helium-acr.name
+
+  service_uri = "https://${var.NAME}.scm.azurewebsites.net/docker/hook"
+  status      = "enabled"
+  scope       = "helium-${var.NAME}:latest"
+  actions     = ["push"]
+  custom_headers = {
+    "Content-Type" = "application/json"
+  }
+}
