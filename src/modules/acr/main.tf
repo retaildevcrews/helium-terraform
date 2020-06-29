@@ -38,6 +38,6 @@ resource null_resource acr-access {
 
 resource null_resource acr-import {
   provisioner "local-exec" {
-    command  = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/helium-${var.LANGUAGE}:stable --image helium-${var.LANGUAGE}:latest"
+    command  = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/helium-${var.LANGUAGE}:stable --image helium-${var.LANGUAGE}:latest --username ${var.ACR_SP_ID} --password ${var.ACR_SP_SECRET}"
   }
 }
