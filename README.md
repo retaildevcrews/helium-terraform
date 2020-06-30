@@ -163,14 +163,14 @@ sed -i "s/<<HE_TENANT_ID>>/$(az account show -o tsv --query tenantId)/g" terrafo
 # replace TF_SUB_ID
 sed -i "s/<<HE_SUB_ID>>/$(az account show -o tsv --query id)/g" terraform.tfvars
 
-# create a service principle
+# create a service principal
 # replace TF_CLIENT_SECRET
 sed -i "s/<<HE_CLIENT_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)/g" terraform.tfvars
 
 # replace TF_CLIENT_ID
 sed -i "s/<<HE_CLIENT_ID>>/$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)/g" terraform.tfvars
 
-# create a service principle
+# create a service principal
 # replace ACR_SP_SECRET
 sed -i "s/<<HE_ACR_SP_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-acr-sp --query password -o tsv)/g" terraform.tfvars
 
