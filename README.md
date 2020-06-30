@@ -24,7 +24,7 @@
   - ACR ci-cd webhook isn't setup - need to test
   - docker container logging isn't enabled
 
-- dash.tpl line 718 - "INSERT LOCATION" - should this be a replacement value?
+- dash.tpl line 718 - "INSERT LOCATION" - should this be a replacement value? Actually I played with that - no clue what it does
 
 - module readme files need to be updated and regenerated
 
@@ -124,7 +124,8 @@ az account set -s {subscription name or Id}
 
 ### TODO - do we need a warning here to make sure He_Name doesn't exist?
 ### BAD things happen if it does ...
-### should we check RG names? Cosmos DB? Other?
+# - Actually if the He_Name exists it will not overwrite the resources - it will ask you to import them into TF for management
+### should we check RG names? Cosmos DB? Other? - same as above
 ### probably easiest to do the first few steps from helium and then do these steps
 ### we could use the same He_* names and the check vs. having to maintain in two places
 ### right now, we don't clone helium, we clone helium-language
@@ -185,6 +186,8 @@ cat terraform.tfvars
 ## Location
 
 Optionally edit terraform.tfvars and replace `centralus` with a different location
+
+Running the 'terraform apply' command below will create README.md files from the markdown text at the top of each module's main.tf file.  Please ensure you place any README changes that you wish to have persist in the main.tf for each module.
 
 ## Deploy `helium`
 
