@@ -49,7 +49,7 @@ resource "azurerm_container_registry_webhook" "webhook" {
 
   service_uri = "https://${var.NAME}.scm.azurewebsites.net/docker/hook"
   status      = "enabled"
-  scope       = "helium-${var.LANG}:latest"
+  scope       = "helium-${var.LANGUAGE}:latest"
   actions     = ["push"]
   custom_headers = {
     "Content-Type" = "application/json"
