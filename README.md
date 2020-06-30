@@ -1,81 +1,9 @@
-# Infrastructure as Code for `helium`
+# Automatically deploy `helium` using terraform
 
 > This repository is used to automatically deploy [helium](https://github.com/retaildevcrews/helium) using [terraform](https://www.hashicorp.com/products/terraform)
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Terraform Plan](https://github.com/retaildevcrews/helium-iac/workflows/Terraform%20Plan/badge.svg)
-
-## Change Log
-
-- updated to use same He_* env vars as manual setup
-  - keys use HE_* in the TF file so they don't get saved via saveenv.sh
-  - added He_Location sed
-  - changed from He_Language to He_Repo for consistency
-  - added He_Repo sed
-- fixed ACR import bug
-- added He_Name preface to tfstate-rg
-- standardized casing / naming in dashboard / alerts
-
-## TODO
-
-- Web Deploy
-  - the image is pulled from docker hub
-    - pull image from ACR using Key Vault credentials
-  - ACR ci-cd webhook isn't setup - need to test
-  - docker container logging isn't enabled
-
-- dash.tpl line 718 - "INSERT LOCATION" - should this be a replacement value?
-
-- module readme files need to be updated and regenerated
-
-- wait for web app before creating web test
-- wait for acr import before creating acr web hook
-- wait for web app before creating acr hook?
-
-- should the tf state RG be created with the same TF script? A tf destroy will delete the state
-- how do the state files get copied to Azure? there is no storage account created
-
-- Should we add webv deployment to manual instructions for consistency?
-
-- need to test dashboard and alerts to make sure they are the same between manual setup and terraform setup
-
-- option to deploy to AKS is missing (I think this is OK - especially for this release)
-
-## Fixed in this branch
-
-- I had to run imdb-import manually to get webv to pass
-  - this now runs syncronously and blocks web
-- web app throws errors due to timing
-  - waits for imdb-import
-  - this blocks smoker
-- smoker throws errors due to timing
-  - waits for imdb-import and web deploy
-
-- the image is pulled from docker hub
-  - should be loaded into ACR (done)
-  - will need an additional SP (done)
-  - will need ACR pull permissions on the SP (done)
-
-- now uses standard He_Name url
-- standardized names to manual install
-
-## Features
-
-- one ACR
-- one docker hub repo
-- one app service plan
-- 3 web apps (API)
-- one AKS Cluster
-- WebV running in ACI to test App Service endpoints
-- one CosmosDB
-- 1 Databases
-- 2 app insights (one for WebV)
-- 1 key vaults
-- standardize endpoints
-  - AppSvc endpoints: $He_Name.azurewebsites.net
-- standardize dashboard
-- standardize Azure health check
-- standardize alerting
+![Terraform Plan](https://github.com/retaildevcrews/helium-terraform/workflows/Terraform%20Plan/badge.svg)
 
 > Visual Studio Codespaces is the easiest way to evaluate helium as all of the prerequisites are automatically installed
 >
@@ -83,8 +11,8 @@
 
 ## Prerequisites
 
-- Azure subscription and a Service Principal permissions to create:
-  - Resource Groups, Service Principals, Role Assignment, Key Vault, Cosmos DB, Azure Container Registry, Azure Monitor, App Service or AKS (Subscription Owner Role)
+- Azure subscription and permissions to create:
+  - Resource Groups, Service Principals, Key Vault, Cosmos DB, Azure Container Registry, Azure Monitor, App Service or AKS (Subscription Owner Role)
 - Bash shell (tested on Visual Studio Codespaces, Mac, Ubuntu, Windows with WSL2)
   - Will not work in Cloud Shell or WSL1
 - Azure CLI ([download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest))
@@ -95,10 +23,10 @@
 
 ```bash
 
-# Clone the Helium-IAC repo if not using Codespaces
-git clone https://github.com/retaildevcrews/helium-iac.git
+# Clone this repo if not using Codespaces
+git clone https://github.com/retaildevcrews/helium-terraform
 
-cd helium-iac/src/root
+cd helium-terraform/src/root
 
 ```
 
@@ -118,13 +46,14 @@ az account set -s {subscription name or Id}
 
 ### Prepare your `terraform.tfvars` file to roll out resources in the subscription of your choice
 
-> All commands require you to be in `helium-iac/src/root`
+> All commands require you to be in `helium-terraform/src/root`
 
 ```bash
 
 ### TODO - do we need a warning here to make sure He_Name doesn't exist?
 ### BAD things happen if it does ...
-### should we check RG names? Cosmos DB? Other?
+# - Actually if the He_Name exists it will not overwrite the resources - it will ask you to import them into TF for management
+### should we check RG names? Cosmos DB? Other? - same as above
 ### probably easiest to do the first few steps from helium and then do these steps
 ### we could use the same He_* names and the check vs. having to maintain in two places
 ### right now, we don't clone helium, we clone helium-language
@@ -185,6 +114,8 @@ cat terraform.tfvars
 ## Location
 
 Optionally edit terraform.tfvars and replace `centralus` with a different location
+
+Running the 'terraform apply' command below will create README.md files from the markdown text at the top of each module's main.tf file.  Please ensure you place any README changes that you wish to have persist in the main.tf for each module.
 
 ## Deploy `helium`
 

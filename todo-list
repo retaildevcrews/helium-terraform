@@ -1,0 +1,71 @@
+## TODO
+
+- Web Deploy
+  - the image is pulled from docker hub
+    - pull image from ACR using Key Vault credentials
+  - ACR ci-cd webhook isn't setup - need to test
+  - docker container logging isn't enabled
+
+- dash.tpl line 718 - "INSERT LOCATION" - should this be a replacement value? Actually I played with that - no clue what it does
+
+- module readme files need to be updated and regenerated
+
+- wait for web app before creating web test
+- wait for acr import before creating acr web hook
+- wait for web app before creating acr hook?
+
+- should the tf state RG be created with the same TF script? A tf destroy will delete the state
+- how do the state files get copied to Azure? there is no storage account created
+
+- Should we add webv deployment to manual instructions for consistency?
+
+- need to test dashboard and alerts to make sure they are the same between manual setup and terraform setup
+
+- option to deploy to AKS is missing (I think this is OK - especially for this release)
+
+## Fixed in this branch
+
+- I had to run imdb-import manually to get webv to pass
+  - this now runs syncronously and blocks web
+- web app throws errors due to timing
+  - waits for imdb-import
+  - this blocks smoker
+- smoker throws errors due to timing
+  - waits for imdb-import and web deploy
+
+- the image is pulled from docker hub
+  - should be loaded into ACR (done)
+  - will need an additional SP (done)
+  - will need ACR pull permissions on the SP (done)
+
+- now uses standard He_Name url
+- standardized names to manual install
+
+- updated to use same He_* env vars as manual setup
+  - keys use HE_* in the TF file so they don't get saved via saveenv.sh
+  - added He_Location sed
+  - changed from He_Language to He_Repo for consistency
+  - added He_Repo sed
+- fixed ACR import bug
+- added He_Name preface to tfstate-rg
+- standardized casing / naming in dashboard / alerts
+
+
+## Features
+
+- one ACR
+- one docker hub repo
+- one app service plan
+- 3 web apps (API)
+- one AKS Cluster
+- WebV running in ACI to test App Service endpoints
+- one CosmosDB
+- 1 Databases
+- 2 app insights (one for WebV)
+- 1 key vaults
+- standardize endpoints
+  - AppSvc endpoints: $He_Name.azurewebsites.net
+- standardize dashboard
+- standardize Azure health check
+- standardize alerting
+
