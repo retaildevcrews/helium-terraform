@@ -1,6 +1,5 @@
 # Change Log
 
-## Intial Commit
+## Intial Release
 
-- Date
-- Features
+- June 30, 2020
