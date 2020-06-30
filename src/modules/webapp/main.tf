@@ -85,8 +85,7 @@ resource azurerm_app_service helium-webapp {
   site_config {
     always_on                 = "true"
     app_command_line          = ""
-//    linux_fx_version          = "DOCKER|${var.acr}/${var.REPO}:stable"
-    linux_fx_version          = "DOCKER|${var.LOGINSERVER}/${var.REPO}:stable"
+    linux_fx_version          = "DOCKER|${var.NAME}.azurecr.io/${var.REPO}:stable"
     use_32_bit_worker_process = "true"
   }
   identity {
@@ -95,7 +94,7 @@ resource azurerm_app_service helium-webapp {
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://${var.LOGINSERVER}"
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://${var.NAME}.azurecr.io"
     "DOCKER_ENABLE_CI"                    = "true"
     "KEYVAULT_NAME"                       = "${var.NAME}-kv"
   }
