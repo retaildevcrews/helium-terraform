@@ -32,3 +32,7 @@ variable "acr" {
   description = "The helium acr created by the ACR module and passed to the DB module"
   default     = "helium-csharp"
 }
+variable "LOGINSERVER" {
+  type        = string
+  description = "The login server from which the image is pull in the ACR"
+}

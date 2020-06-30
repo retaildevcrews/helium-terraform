@@ -1,7 +1,7 @@
 /**
 * # Module Properties
 *
-* This module is used to create the azure container registry to store private copies of the [Helium](https://github.com/retaildevcrews/helium) application containers or a private copy of the [webvalidate](https://github.com/retaildevcrews/webvalidate) container to use in this test environment
+* This module is used to create the azure container registry to store private copies of the [Helium](https:github.com/retaildevcrews/helium) application containers or a private copy of the [webvalidate](https:github.com/retaildevcrews/webvalidate) container to use in this test environment
 * 
 * For this to work you will need to assign `AcrPull` rights to the Application Insights service to the ACR post deployment. 
 *
@@ -13,6 +13,8 @@
 * NAME        = var.NAME
 * LOCATION    = var.LOCATION
 * ACR_RG_NAME = azurerm_resource_group.helium-acr.name
+* acr
+* LOGINSERVER
 * }
 * ```
 */
@@ -21,13 +23,23 @@ resource azurerm_container_registry helium-acr {
   name                = var.NAME
   location            = var.LOCATION
   resource_group_name = var.ACR_RG_NAME
-  admin_enabled       = false
+//  admin_enabled       = false
+  admin_enabled       = true   
   sku                 = "Standard"
 }
 
 output "acr" {
   value       = azurerm_container_registry.helium-acr.name
   description = "The name of the Azure Container Registry"
+}
+
+data azurerm_container_registry LOGINSERVER {
+  name                = "LOGINSERVER"
+  resource_group_name = var.ACR_RG_NAME
+}
+
+output "LOGINSERVER" {
+  value       = data.azurerm_container_registry.helium-acr.login_server
 }
 
 resource null_resource acr-access {
@@ -38,8 +50,7 @@ resource null_resource acr-access {
 
 resource null_resource acr-import {
   provisioner "local-exec" {
-  //  command = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/${var.REPO}:stable --image ${var.REPO}:latest"
-     command = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/${var.acr}/${var.REPO}:stable --image ${var.REPO}:latest"
+  command = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/${var.REPO}:stable --image ${var.REPO}:latest"
   }
 }
 resource "azurerm_container_registry_webhook" "webhook" {
@@ -47,8 +58,7 @@ resource "azurerm_container_registry_webhook" "webhook" {
   location            = var.LOCATION
   resource_group_name = var.ACR_RG_NAME
   registry_name       = azurerm_container_registry.helium-acr.name
-
-  service_uri = "https://${var.NAME}.scm.azurewebsites.net/docker/hook"
+  service_uri = "https:${var.NAME}.scm.azurewebsites.net/docker/hook"
   status      = "enabled"
   scope       = "${var.REPO}:latest"
   actions     = ["push"]

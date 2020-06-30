@@ -72,6 +72,10 @@ variable "acr" {
   default     = "helium-csharp"
 }
 
+variable "LOGINSERVER" {
+  type        = string
+  description = "The acr login server created by the ACR module and passed to the this module"
+}
 variable "IMDB_IMPORT_DONE" {
   description = "ACI module dependency complete"
   type        = bool

@@ -81,10 +81,12 @@ resource azurerm_app_service helium-webapp {
   resource_group_name = var.APP_RG_NAME
   https_only          = false
   app_service_plan_id = azurerm_app_service_plan.helium-app-plan.id
+
   site_config {
     always_on                 = "true"
     app_command_line          = ""
-    linux_fx_version          = "DOCKER|${var.acr}/${var.REPO}:stable"
+//    linux_fx_version          = "DOCKER|${var.acr}/${var.REPO}:stable"
+    linux_fx_version          = "DOCKER|${var.LOGINSERVER}/${var.REPO}:stable"
     use_32_bit_worker_process = "true"
   }
   identity {
@@ -93,7 +95,7 @@ resource azurerm_app_service helium-webapp {
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://index.docker.io"
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://${data.azurerm_container_registry.helium-acr.LOGINSERVER}"
     "DOCKER_ENABLE_CI"                    = "true"
     "KEYVAULT_NAME"                       = "${var.NAME}-kv"
   }
