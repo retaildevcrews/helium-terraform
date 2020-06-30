@@ -66,6 +66,11 @@ variable "REPO" {
   type        = string
   description = "The helium repo"
 }
+variable "acr" {
+  type        = string
+  description = "The helium acr created by the ACR module and passed to the this module"
+  default     = "helium-csharp"
+}
 
 variable "IMDB_IMPORT_DONE" {
   description = "ACI module dependency complete"

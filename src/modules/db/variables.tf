@@ -29,3 +29,13 @@ variable "COSMOS_COL" {
   description = "The Cosmos DB collection name"
   default     = "movies"
 }
+variable "REPO" {
+  type        = string
+  description = "The helium repo"
+  default     = "helium-csharp"
+}
+variable "acr" {
+  type        = string
+  description = "The helium acr created by the ACR module and passed to the DB module"
+  default     = "helium-csharp"
+}

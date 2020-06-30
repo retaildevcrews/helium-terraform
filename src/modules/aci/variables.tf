@@ -29,3 +29,8 @@ variable "REPO" {
   description = "helium repo to use"
   type        = string
 }
+variable "acr" {
+  type        = string
+  description = "The helium acr created by the ACR module and passed to the DB module"
+  default     = "helium-csharp"
+}

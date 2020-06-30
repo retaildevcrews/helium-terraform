@@ -70,7 +70,7 @@ resource "azurerm_cosmosdb_sql_container" "cosmosdb-movies" {
 
 resource null_resource imdb-import {
   provisioner "local-exec" {
-    command = "docker pull retaildevcrew/imdb-import:latest && docker run --log-opt mode=non-blocking --log-opt max-buffer-size=4m --rm --name imdb-import retaildevcrew/imdb-import:latest \"${azurerm_cosmosdb_account.cosmosdb.name}\" \"${azurerm_cosmosdb_account.cosmosdb.primary_master_key}\" \"${azurerm_cosmosdb_sql_database.cosmosdb-imdb.name}\" \"${azurerm_cosmosdb_sql_container.cosmosdb-movies.name}\""
+    command = "docker pull \"${var.acr}\":latest && docker run --log-opt mode=non-blocking --log-opt max-buffer-size=4m --rm --name imdb-import \"${var.acr}/${var.REPO}\":latest \"${azurerm_cosmosdb_account.cosmosdb.name}\" \"${azurerm_cosmosdb_account.cosmosdb.primary_master_key}\" \"${azurerm_cosmosdb_sql_database.cosmosdb-imdb.name}\" \"${azurerm_cosmosdb_sql_container.cosmosdb-movies.name}\""
     //    command = "docker pull retaildevcrew/imdb-import:latest && docker run --rm --name imdb-import retaildevcrew/imdb-import:latest \"${azurerm_cosmosdb_account.cosmosdb.name}\" \"${azurerm_cosmosdb_account.cosmosdb.primary_master_key}\" \"${azurerm_cosmosdb_sql_database.cosmosdb-imdb.name}\" \"${azurerm_cosmosdb_sql_container.cosmosdb-movies.name}\""
   }
 }
