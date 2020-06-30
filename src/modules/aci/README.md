@@ -45,4 +45,3 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | instrumentation\_key | Instrumentation Key for the webvalidate instance to be used by a dashboard module if you want a dashboard to monitor webv metrics |
-

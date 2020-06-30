@@ -25,7 +25,7 @@ variable "APP_SERVICE_DONE" {
   type        = bool
 }
 
-variable "LANGUAGE" {
-  description = "helium language repo to use"
+variable "REPO" {
+  description = "helium repo to use"
   type        = string
 }

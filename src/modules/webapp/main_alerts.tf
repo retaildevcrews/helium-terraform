@@ -2,24 +2,24 @@ resource "random_uuid" "appsguid" {}
 resource "random_uuid" "webtestguid" {}
 
 
-resource "azurerm_monitor_action_group" "helium-iac-AG" {
+resource "azurerm_monitor_action_group" "helium-action-group" {
   name                = var.ACTION_GROUP_NAME
   resource_group_name = var.APP_RG_NAME
-  short_name          = substr("${var.NAME}_${var.ACTION_GROUP_NAME}", 0, 12)
+  short_name          = substr("${var.ACTION_GROUP_NAME}", 0, 12)
   email_receiver {
-    name                    = "Alert-receiver-${var.NAME}"
+    name                    = "${var.NAME}-alert-receiver"
     email_address           = var.EMAIL_FOR_ALERTS
     use_common_alert_schema = false
   }
 }
 
-resource "azurerm_monitor_metric_alert" "Response-time-alert" {
-  name                = "${var.NAME}-Response-Time-Alert"
+resource "azurerm_monitor_metric_alert" "response-time-alert" {
+  name                = "${var.NAME}-response-time-alert"
   resource_group_name = var.APP_RG_NAME
   scopes              = [azurerm_application_insights.helium.id]
   frequency           = var.RT_FREQUENCY
   window_size         = var.RT_WINDOW_SIZE
-  description         = "Server Response Time over 20ms."
+  description         = "Server Response Time Too High"
   severity            = var.RT_SEVERITY
   auto_mitigate       = "false"
   enabled             = "false"
@@ -31,16 +31,16 @@ resource "azurerm_monitor_metric_alert" "Response-time-alert" {
     threshold        = var.RT_THRESHOLD
   }
   action {
-    action_group_id = azurerm_monitor_action_group.helium-iac-AG.id
+    action_group_id = azurerm_monitor_action_group.helium-action-group.id
   }
 }
-resource "azurerm_monitor_metric_alert" "Requests-over600-alert" {
-  name                = "${var.NAME}-Requests-Over-600-Alert"
+resource "azurerm_monitor_metric_alert" "requests-too-high-alert" {
+  name                = "${var.NAME}-requests-too-high-alert"
   resource_group_name = var.APP_RG_NAME
   scopes              = [azurerm_application_insights.helium.id]
   frequency           = var.MR_FREQUENCY
   window_size         = var.MR_WINDOW_SIZE
-  description         = "Max Requests over 600."
+  description         = "Requests Too High"
   severity            = var.MR_SEVERITY
   auto_mitigate       = "false"
   enabled             = "false"
@@ -52,14 +52,14 @@ resource "azurerm_monitor_metric_alert" "Requests-over600-alert" {
     threshold        = var.MR_THRESHOLD
   }
   action {
-    action_group_id = azurerm_monitor_action_group.helium-iac-AG.id
+    action_group_id = azurerm_monitor_action_group.helium-action-group.id
   }
 }
-resource "azurerm_application_insights_web_test" "Healthz-webtest" {
+resource "azurerm_application_insights_web_test" "helium-web-test" {
   name                    = "${var.NAME}-web-test"
   location                = var.LOCATION
   resource_group_name     = var.APP_RG_NAME
-  description             = "Webtest on appInsights"
+  description             = "web test (/healthz)"
   enabled                 = "true"
   application_insights_id = azurerm_application_insights.helium.id
   kind                    = "ping"
@@ -75,13 +75,13 @@ resource "azurerm_application_insights_web_test" "Healthz-webtest" {
 XML
 }
 
-resource "azurerm_monitor_metric_alert" "Healthz-webtest-alert" {
+resource "azurerm_monitor_metric_alert" "helium-web-test-alert" {
   name                = "${var.NAME}-web-test-alert"
   resource_group_name = var.APP_RG_NAME
   scopes              = [azurerm_application_insights.helium.id]
   frequency           = var.WT_FREQUENCY
   window_size         = var.WT_WINDOW_SIZE
-  description         = "web-test-alert"
+  description         = "Web Test Alert"
   severity            = var.WT_SEVERITY
   auto_mitigate       = "false"
   enabled             = "false"
@@ -98,16 +98,16 @@ resource "azurerm_monitor_metric_alert" "Healthz-webtest-alert" {
     }
   }
   action {
-    action_group_id = azurerm_monitor_action_group.helium-iac-AG.id
+    action_group_id = azurerm_monitor_action_group.helium-action-group.id
   }
 }
-resource "azurerm_monitor_metric_alert" "Requests-below1-alert" {
-  name                = "${var.NAME}-Requests-below1-Alert"
+resource "azurerm_monitor_metric_alert" "requests-too-low-alert" {
+  name                = "${var.NAME}-requests-too-low-alert"
   resource_group_name = var.APP_RG_NAME
   scopes              = [azurerm_application_insights.helium.id]
   frequency           = var.WV_FREQUENCY
   window_size         = var.WV_WINDOW_SIZE
-  description         = "Requests below 1"
+  description         = "Requests Too Low"
   severity            = var.WV_SEVERITY
   auto_mitigate       = "false"
   enabled             = "true"
@@ -119,6 +119,6 @@ resource "azurerm_monitor_metric_alert" "Requests-below1-alert" {
     threshold        = var.WV_THRESHOLD
   }
   action {
-    action_group_id = azurerm_monitor_action_group.helium-iac-AG.id
+    action_group_id = azurerm_monitor_action_group.helium-action-group.id
   }
 }

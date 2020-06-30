@@ -16,7 +16,7 @@
               "settings": {
                 "content": {
                   "settings": {
-                    "content": "<h1 style=\"text-align: center;\">${name} Dashboard</h1>\n",
+                    "content": "<h1 style=\"text-align: center;\">Helium Dashboard (${name})</h1>\n",
                     "title": "",
                     "subtitle": "",
                     "markdownSource": 1
@@ -713,11 +713,11 @@
         }
       }
     },
-  "name": "Helium-Dashboard",
+  "name": "Helium-Dashboard-${name}",
   "type": "Microsoft.Portal/dashboards",
   "location": "INSERT LOCATION",
   "tags": {
-    "hidden-title": "Helium-Dashboard"
+    "hidden-title": "Helium-Dashboard-${name}"
 },
   "apiVersion": "2015-08-01-preview"
 }

@@ -5,16 +5,35 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Terraform Plan](https://github.com/retaildevcrews/helium-iac/workflows/Terraform%20Plan/badge.svg)
 
+## Change Log
+
+- updated to use same He_* env vars as manual setup
+  - keys use HE_* in the TF file so they don't get saved via saveenv.sh
+  - added He_Location sed
+  - changed from He_Language to He_Repo for consistency
+  - added He_Repo sed
+- fixed ACR import bug
+- added He_Name preface to tfstate-rg
+- standardized casing / naming in dashboard / alerts
+
 ## TODO
 
 - Web Deploy
   - the image is pulled from docker hub
-    - should be loaded into ACR (done)
-    - will need an additional SP (done)
-    - will need ACR pull permissions on the SP (done)
     - pull image from ACR using Key Vault credentials
-  - ACR ci-cd webhook isn't setup
+  - ACR ci-cd webhook isn't setup - need to test
   - docker container logging isn't enabled
+
+- dash.tpl line 718 - "INSERT LOCATION" - should this be a replacement value?
+
+- module readme files need to be updated and regenerated
+
+- wait for web app before creating web test
+- wait for acr import before creating acr web hook
+- wait for web app before creating acr hook?
+
+- should the tf state RG be created with the same TF script? A tf destroy will delete the state
+- how do the state files get copied to Azure? there is no storage account created
 
 - Should we add webv deployment to manual instructions for consistency?
 
@@ -37,7 +56,7 @@
   - will need an additional SP (done)
   - will need ACR pull permissions on the SP (done)
 
-- now uses standard TF_NAME url
+- now uses standard He_Name url
 - standardized names to manual install
 
 ## Features
@@ -103,7 +122,7 @@ az account set -s {subscription name or Id}
 
 ```bash
 
-### TODO - do we need a warning here to make sure TF_NAME doesn't exist?
+### TODO - do we need a warning here to make sure He_Name doesn't exist?
 ### BAD things happen if it does ...
 ### should we check RG names? Cosmos DB? Other?
 ### probably easiest to do the first few steps from helium and then do these steps
@@ -114,37 +133,49 @@ az account set -s {subscription name or Id}
 
 # set an env var with the name you want to use
 # replace the two values below
-# TF_NAME must contain only alphanumeric characters and is a prefix for other resources
+# He_Name must contain only alphanumeric characters and is a prefix for other resources
 
-export TF_NAME=replaceWithYourUniqueName
-export TF_EMAIL=replaceWithYourEmail
+export He_Name=replaceWithYourUniqueName
+export He_Email=replaceWithYourEmail
+
+# change the location (optional)
+export He_Location=centralus
+
+# change the repo (optional - valid: helium-csharp, helium-java, helium-typescript)
+export He_Repo=helium-csharp
 
 # create terraform.tfvars and replace placeholder values
-# replace TF_NAME
-cat ../example.tfvars | sed "s/<<TF_NAME>>/$TF_NAME/g" > terraform.tfvars
+# replace He_Name
+cat ../example.tfvars | sed "s/<<He_Name>>/$He_Name/g" > terraform.tfvars
 
 # replace email
-sed -i "s/<<TF_EMAIL>>/$TF_EMAIL/g" terraform.tfvars
+sed -i "s/<<He_Location>>/$He_Location/g" terraform.tfvars
+
+# replace repo
+sed -i "s/<<He_Repo>>/$He_Repo/g" terraform.tfvars
+
+# replace email
+sed -i "s/<<He_Email>>/$He_Email/g" terraform.tfvars
 
 # replace TF_TENANT_ID
-sed -i "s/<<TF_TENANT_ID>>/$(az account show -o tsv --query tenantId)/g" terraform.tfvars
+sed -i "s/<<HE_TENANT_ID>>/$(az account show -o tsv --query tenantId)/g" terraform.tfvars
 
 # replace TF_SUB_ID
-sed -i "s/<<TF_SUB_ID>>/$(az account show -o tsv --query id)/g" terraform.tfvars
+sed -i "s/<<HE_SUB_ID>>/$(az account show -o tsv --query id)/g" terraform.tfvars
 
 # create a service principle
 # replace TF_CLIENT_SECRET
-sed -i "s/<<TF_CLIENT_SECRET>>/$(az ad sp create-for-rbac -n http://${TF_NAME}-tf-sp --query password -o tsv)/g" terraform.tfvars
+sed -i "s/<<HE_CLIENT_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)/g" terraform.tfvars
 
 # replace TF_CLIENT_ID
-sed -i "s/<<TF_CLIENT_ID>>/$(az ad sp show --id http://${TF_NAME}-tf-sp --query appId -o tsv)/g" terraform.tfvars
+sed -i "s/<<HE_CLIENT_ID>>/$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)/g" terraform.tfvars
 
 # create a service principle
 # replace ACR_SP_SECRET
-sed -i "s/<<ACR_SP_SECRET>>/$(az ad sp create-for-rbac -n http://${TF_NAME}-acr-sp --query password -o tsv)/g" terraform.tfvars
+sed -i "s/<<HE_ACR_SP_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-acr-sp --query password -o tsv)/g" terraform.tfvars
 
 # replace ACR_SP_ID
-sed -i "s/<<ACR_SP_ID>>/$(az ad sp show --id http://${TF_NAME}-acr-sp --query objectId -o tsv)/g" terraform.tfvars
+sed -i "s/<<HE_ACR_SP_ID>>/$(az ad sp show --id http://${He_Name}-acr-sp --query objectId -o tsv)/g" terraform.tfvars
 
 # validate the substitutions
 cat terraform.tfvars
@@ -206,8 +237,8 @@ Customizations are found in the /src/root/terraform.tfvars file.  This file shou
 terraform destroy
 
 # delete the service principals
-az ad sp delete --id http://${TF_NAME}-acr-sp
-az ad sp delete --id http://${TF_NAME}-tf-sp
+az ad sp delete --id http://${He_Name}-acr-sp
+az ad sp delete --id http://${He_Name}-tf-sp
 
 # remove state and vars files
 rm terraform.tfstate*

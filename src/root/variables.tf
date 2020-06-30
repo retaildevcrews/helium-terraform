@@ -65,10 +65,10 @@ variable "COSMOS_COL" {
   default     = "movies"
 }
 
-variable "LANGUAGE" {
+variable "REPO" {
   type        = string
-  description = "The helium language repo"
-  default     = "csharp"
+  description = "The helium repo"
+  default     = "helium-csharp"
 }
 
 variable "ACTION_GROUP_NAME" {

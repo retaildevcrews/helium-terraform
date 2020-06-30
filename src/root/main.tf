@@ -55,7 +55,7 @@ resource "azurerm_resource_group" "helium-aci" {
 }
 
 resource "azurerm_resource_group" "tfstate" {
-  name     = "tfstate-rg"
+  name     = "${var.NAME}-tf-rg"
   location = var.LOCATION
 }
 
@@ -63,7 +63,7 @@ module "acr" {
   source        = "../modules/acr"
   NAME          = var.NAME
   LOCATION      = var.LOCATION
-  LANGUAGE      = var.LANGUAGE
+  REPO          = var.REPO
   ACR_RG_NAME   = azurerm_resource_group.helium-acr.name
   ACR_SP_ID     = var.ACR_SP_ID
   ACR_SP_SECRET = var.ACR_SP_SECRET
@@ -84,6 +84,7 @@ module "web" {
 
   NAME              = var.NAME
   LOCATION          = var.LOCATION
+  REPO              = var.REPO
   ACR_SP_ID         = var.ACR_SP_ID
   ACR_SP_SECRET     = var.ACR_SP_SECRET
   APP_RG_NAME       = azurerm_resource_group.helium-app.name
@@ -124,7 +125,7 @@ module "aci" {
   source              = "../modules/aci"
   NAME                = var.NAME
   LOCATION            = var.LOCATION
-  LANGUAGE            = var.LANGUAGE
+  REPO                = var.REPO
   CONTAINER_FILE_NAME = var.CONTAINER_FILE_NAME
   SLEEP_TIME          = var.SLEEP_TIME
   ACI_RG_NAME         = azurerm_resource_group.helium-aci.name

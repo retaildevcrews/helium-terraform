@@ -23,7 +23,7 @@ variable "LOCATION" {
   description = "The Azure Region in which all resources in this example should be created."
 }
 
-variable "LANGUAGE" {
+variable "REPO" {
   type        = string
-  description = "The helium language repo"
+  description = "The helium repo"
 }

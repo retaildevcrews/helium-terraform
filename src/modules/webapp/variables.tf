@@ -62,10 +62,9 @@ variable "TFSTATE_RG_NAME" {
   description = "The Azure Resource Group the tfstate files should be added to"
 }
 
-variable "LANGUAGE" {
+variable "REPO" {
   type        = string
-  description = "The helium language repo"
-  default     = "csharp"
+  description = "The helium repo"
 }
 
 variable "IMDB_IMPORT_DONE" {

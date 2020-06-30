@@ -43,7 +43,7 @@ resource "azurerm_container_group" helium-aci {
   container {
     name     = "${var.NAME}-webv"
     image    = "retaildevcrew/webvalidate"
-    commands = ["dotnet", "../webvalidate.dll", "--server", "${var.NAME}", "--files", "${var.CONTAINER_FILE_NAME}", "--base-url", "https://raw.githubusercontent.com/retaildevcrews/helium-${var.LANGUAGE}/master/TestFiles/", "--run-loop", "--sleep", "${var.SLEEP_TIME}", "--telemetry-name", "${var.NAME}", "--telemetry-key", azurerm_application_insights.appIns.instrumentation_key]
+    commands = ["dotnet", "../webvalidate.dll", "--server", "${var.NAME}", "--files", "${var.CONTAINER_FILE_NAME}", "--base-url", "https://raw.githubusercontent.com/retaildevcrews/${var.REPO}/master/TestFiles/", "--run-loop", "--sleep", "${var.SLEEP_TIME}", "--telemetry-name", "${var.NAME}", "--telemetry-key", azurerm_application_insights.appIns.instrumentation_key]
     cpu      = "0.5"
     memory   = "1.5"
     ports {
@@ -53,6 +53,6 @@ resource "azurerm_container_group" helium-aci {
   }
   tags = {
     environment = var.NAME,
-    language    = var.LANGUAGE
+    repo        = var.REPO
   }
 }

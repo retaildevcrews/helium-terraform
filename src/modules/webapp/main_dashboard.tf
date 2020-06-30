@@ -1,5 +1,5 @@
 resource "azurerm_dashboard" "helium-dashboard" {
-  name                = "Helium-Dashboard"
+  name                = "Helium-Dashboard-${var.NAME}"
   resource_group_name = var.APP_RG_NAME
   location            = var.LOCATION
   tags = {
