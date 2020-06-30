@@ -95,7 +95,7 @@ resource azurerm_app_service helium-webapp {
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://${data.azurerm_container_registry.helium-acr.LOGINSERVER}"
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://${var.LOGINSERVER}"
     "DOCKER_ENABLE_CI"                    = "true"
     "KEYVAULT_NAME"                       = "${var.NAME}-kv"
   }

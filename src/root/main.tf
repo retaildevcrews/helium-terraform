@@ -59,8 +59,16 @@ resource "azurerm_resource_group" "tfstate" {
   location = var.LOCATION
 }
 
-data "azurerm_container_registry" "helium-acr" {
-  name                = "LOGINSERVER"
+resource azurerm_container_registry LOGINSERVER {
+  name                = var.NAME
+  location            = var.LOCATION
+  resource_group_name = azurerm_resource_group.helium-acr.name
+  admin_enabled       = true   
+  sku                 = "Standard"
+}
+
+data "azurerm_container_registry" "LOGINSERVER" {
+  name                = "loginserver"
   resource_group_name = azurerm_resource_group.helium-acr.name
 }
 
@@ -72,7 +80,7 @@ module "acr" {
   ACR_RG_NAME   = azurerm_resource_group.helium-acr.name
   ACR_SP_ID     = var.ACR_SP_ID
   ACR_SP_SECRET = var.ACR_SP_SECRET
-  LOGINSERVER   = azurerm_container_registry.helium-acr.login-name
+  LOGINSERVER   = azurerm_container_registry.LOGINSERVER.name
 }
 
 module "db" {

@@ -39,7 +39,7 @@ data azurerm_container_registry LOGINSERVER {
 }
 
 output "LOGINSERVER" {
-  value       = data.azurerm_container_registry.helium-acr.login_server
+  value       = data.azurerm_container_registry.LOGINSERVER.login_server
 }
 
 resource null_resource acr-access {
