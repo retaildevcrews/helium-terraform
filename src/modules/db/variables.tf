@@ -34,8 +34,12 @@ variable "REPO" {
   description = "The helium repo"
   default     = "helium-csharp"
 }
-variable "acr" {
+variable "ACR_SP_ID" {
   type        = string
-  description = "The helium acr created by the ACR module and passed to the DB module"
-  default     = "helium-csharp"
+  description = "The ACR Service Principal ID"
+}
+
+variable "ACR_SP_SECRET" {
+  type        = string
+  description = "The ACR Service Principal secret"
 }

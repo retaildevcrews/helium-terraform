@@ -1,10 +1,19 @@
 #!/bin/bash
 
+# First check if the vars are set then
 # create terraform.tfvars and replace template values
-# replace He_Name
-cat ../example.tfvars | sed "s/<<He_Name>>/$He_Name/g" > terraform.tfvars
+# replace He_Name and make sure is over five in length with no special characters
 
-# replace email
+He_Name_Size=${#He_Name}
+
+if [[ $He_Name_Size -gt 0 && $He_Name_Size -lt 6 ]]
+then
+cat ../example.tfvars | sed "s/<<He_Name>>/$He_Name/g" > terraform.tfvars
+else
+echo "Please set He_Name first and make sure it is at least 5 characters in length with no special characters.  Visit https://github.com/RetailDevCrews/helium to get started"
+fi 
+
+# replace location 
 sed -i "s/<<He_Location>>/$He_Location/g" terraform.tfvars
 
 # replace repo
