@@ -91,18 +91,15 @@ resource azurerm_app_service helium-webapp {
   identity {
     type = "SystemAssigned"
     }
-  }
 
-resource "azurerm_storage_blob" "${var.NAME}-logs" {
-  name                        = "${var.NAME}-logs"
-  storage_container_name      = 
-} 
-resource http_logs {
-    azure_blob_storage {
-      level = "Error"
-      // level can be Error, Warning, Information, Verbose and Off
-      retention_in_days = 10
+  logs {
+    http_logs {
+      file_system {
+        retention_in_days        =  30
+        retention_in_mb          = "100"
+      }
     }
+  }
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
@@ -111,7 +108,6 @@ resource http_logs {
     "KEYVAULT_NAME"                       = "${var.NAME}-kv"
   }
 }
-
 output "APP_SERVICE_DONE" {
   depends_on  = [azurerm_app_service.helium-webapp]
   value       = true

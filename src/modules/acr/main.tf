@@ -33,18 +33,6 @@ resource null_resource acr-access {
   }
 }
 
-resource null_resource acr-user {
-  provisioner "local-exec" {
-    command = "export He_AcrUserId=$(az keyvault secret show --vault-name $He_Name --name \"AcrUserId\" --query id -o tsv)"
-  }
-}
-
-resource null_resource acr-password {
-  provisioner "local-exec" {
-    command = "export He_AcrPassword=$(az keyvault secret show --vault-name $He_Name --name \"AcrPassword\" --query id -o tsv)"
-  }
-}
-
 resource null_resource acr-import {
   provisioner "local-exec" {
     command = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/${var.REPO}:stable --image ${var.REPO}:latest"
