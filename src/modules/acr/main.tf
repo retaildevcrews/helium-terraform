@@ -23,13 +23,8 @@ resource azurerm_container_registry helium-acr {
   name                = var.NAME
   location            = var.LOCATION
   resource_group_name = var.ACR_RG_NAME
-  admin_enabled       = false   
+  admin_enabled       = false
   sku                 = "Standard"
-}
-
-output "acr" {
-  value       = azurerm_container_registry.helium-acr.name
-  description = "The name of the Azure Container Registry"
 }
 
 resource null_resource acr-access {
@@ -38,9 +33,21 @@ resource null_resource acr-access {
   }
 }
 
+resource null_resource acr-user {
+  provisioner "local-exec" {
+    command = "export He_AcrUserId=$(az keyvault secret show --vault-name $He_Name --name \"AcrUserId\" --query id -o tsv)"
+  }
+}
+
+resource null_resource acr-password {
+  provisioner "local-exec" {
+    command = "export He_AcrPassword=$(az keyvault secret show --vault-name $He_Name --name \"AcrPassword\" --query id -o tsv)"
+  }
+}
+
 resource null_resource acr-import {
   provisioner "local-exec" {
-  command = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/${var.REPO}:stable --image ${var.REPO}:latest"
+    command = "az acr import -n ${azurerm_container_registry.helium-acr.name} --source docker.io/retaildevcrew/${var.REPO}:stable --image ${var.REPO}:latest"
   }
 }
 resource "azurerm_container_registry_webhook" "webhook" {
@@ -48,10 +55,10 @@ resource "azurerm_container_registry_webhook" "webhook" {
   location            = var.LOCATION
   resource_group_name = var.ACR_RG_NAME
   registry_name       = azurerm_container_registry.helium-acr.name
-  service_uri = "https://${var.NAME}.scm.azurewebsites.net/docker/hook"
-  status      = "enabled"
-  scope       = "${var.REPO}:latest"
-  actions     = ["push"]
+  service_uri         = "https://${var.NAME}.scm.azurewebsites.net/docker/hook"
+  status              = "enabled"
+  scope               = "${var.REPO}:latest"
+  actions             = ["push"]
   custom_headers = {
     "Content-Type" = "application/json"
   }

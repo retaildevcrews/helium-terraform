@@ -85,7 +85,7 @@ resource azurerm_app_service helium-webapp {
   site_config {
     always_on                 = "true"
     app_command_line          = ""
-    linux_fx_version          = "DOCKER|${var.NAME}.azurecr.io/${var.REPO}:stable"
+    linux_fx_version          = "DOCKER|${var.NAME}.azurecr.io/${var.REPO}:latest"
     use_32_bit_worker_process = "true"
   }
   identity {
