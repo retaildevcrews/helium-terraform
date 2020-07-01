@@ -90,7 +90,19 @@ resource azurerm_app_service helium-webapp {
   }
   identity {
     type = "SystemAssigned"
+    }
   }
+
+resource "azurerm_storage_blob" "${var.NAME}-logs" {
+  name                        = "${var.NAME}-logs"
+  storage_container_name      = 
+} 
+resource http_logs {
+    azure_blob_storage {
+      level = "Error"
+      // level can be Error, Warning, Information, Verbose and Off
+      retention_in_days = 10
+    }
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
