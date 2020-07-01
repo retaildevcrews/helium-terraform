@@ -2,15 +2,15 @@
 
 # First check if the vars are set then
 # create terraform.tfvars and replace template values
-# replace He_Name and make sure is over five in length with no special characters
+# replace He_Name as it may only contain alphanumeric characters and must be between 3-12 characters.  It can actually be 24 - but a lot of other variables have a 24 character limit
 
 He_Name_Size=${#He_Name}
 
-if [[ $He_Name_Size -gt 0 && $He_Name_Size -lt 6 ]]
+if [[ $He_Name_Size -gt 3 && $He_Name_Size -lt 12 ]]
 then
 cat ../example.tfvars | sed "s/<<He_Name>>/$He_Name/g" > terraform.tfvars
 else
-echo "Please set He_Name first and make sure it is at least 5 characters in length with no special characters.  Visit https://github.com/RetailDevCrews/helium to get started"
+echo "Please set He_Name first and make sure it is between 3 and 12 characters in length with no special characters.  Visit https://github.com/RetailDevCrews/helium to get started"
 fi 
 
 # replace location 
