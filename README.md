@@ -3,7 +3,6 @@
 > This repository is used to automatically deploy [helium](https://github.com/retaildevcrews/helium) using [terraform](https://www.hashicorp.com/products/terraform)
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Terraform Plan](https://github.com/retaildevcrews/helium-terraform/workflows/Terraform%20Plan/badge.svg)
 
 > Visual Studio Codespaces is the easiest way to evaluate helium as all of the prerequisites are automatically installed
 >
@@ -30,7 +29,7 @@ cd helium-terraform/src/root
 
 ```
 
-### Login to Azure and select subscription
+### Login to Azure
 
 ```bash
 
@@ -44,113 +43,69 @@ az account set -s {subscription name or Id}
 
 ```
 
-### Prepare your `terraform.tfvars` file to roll out resources in the subscription of your choice
-
 > All commands require you to be in `helium-terraform/src/root`
 
+### Choose a unique DNS name
+
 ```bash
+# this will be the prefix for all resources
+# only use a-z and 0-9 - do not include punctuation or uppercase characters
+# must be at least 5 characters long
+# must start with a-z (only lowercase)
+export He_Name=[your unique name]
 
-### TODO - do we need a warning here to make sure He_Name doesn't exist?
-### BAD things happen if it does ...
-# - Actually if the He_Name exists it will not overwrite the resources - it will ask you to import them into TF for management
-### should we check RG names? Cosmos DB? Other? - same as above
-### probably easiest to do the first few steps from helium and then do these steps
-### we could use the same He_* names and the check vs. having to maintain in two places
-### right now, we don't clone helium, we clone helium-language
-### maybe we put the shipping version in helium with instructions?
-### would need two repos in codespaces, but shouldn't be an issue - will need a design review
+### if true, change He_Name
+az cosmosdb check-name-exists -n ${He_Name}
 
-# set an env var with the name you want to use
-# replace the two values below
-# He_Name must contain only alphanumeric characters and is a prefix for other resources
-
-export He_Name=replaceWithYourUniqueName
-export He_Email=replaceWithYourEmail
-
-# change the location (optional)
-export He_Location=centralus
-
-# change the repo (optional - valid: helium-csharp, helium-java, helium-typescript)
-export He_Repo=helium-csharp
-
-# create terraform.tfvars and replace placeholder values
-# replace He_Name
-cat ../example.tfvars | sed "s/<<He_Name>>/$He_Name/g" > terraform.tfvars
-
-# replace email
-sed -i "s/<<He_Location>>/$He_Location/g" terraform.tfvars
-
-# replace repo
-sed -i "s/<<He_Repo>>/$He_Repo/g" terraform.tfvars
-
-# replace email
-sed -i "s/<<He_Email>>/$He_Email/g" terraform.tfvars
-
-# replace TF_TENANT_ID
-sed -i "s/<<HE_TENANT_ID>>/$(az account show -o tsv --query tenantId)/g" terraform.tfvars
-
-# replace TF_SUB_ID
-sed -i "s/<<HE_SUB_ID>>/$(az account show -o tsv --query id)/g" terraform.tfvars
-
-# create a service principal
-# replace TF_CLIENT_SECRET
-sed -i "s/<<HE_CLIENT_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)/g" terraform.tfvars
-
-# replace TF_CLIENT_ID
-sed -i "s/<<HE_CLIENT_ID>>/$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)/g" terraform.tfvars
-
-# create a service principal
-# replace ACR_SP_SECRET
-sed -i "s/<<HE_ACR_SP_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-acr-sp --query password -o tsv)/g" terraform.tfvars
-
-# replace ACR_SP_ID
-sed -i "s/<<HE_ACR_SP_ID>>/$(az ad sp show --id http://${He_Name}-acr-sp --query objectId -o tsv)/g" terraform.tfvars
-
-# validate the substitutions
-cat terraform.tfvars
+### if nslookup doesn't fail to resolve, change He_Name
+nslookup ${He_Name}.azurewebsites.net
+nslookup ${He_Name}.vault.azure.net
+nslookup ${He_Name}.azurecr.io
 
 ```
 
-## Location
+### Set email address
 
-Optionally edit terraform.tfvars and replace `centralus` with a different location
+```bash
 
-Running the 'terraform apply' command below will create README.md files from the markdown text at the top of each module's main.tf file.  Please ensure you place any README changes that you wish to have persist in the main.tf for each module.
+# this is used for sending alert emails
+export He_Email=replaceWithYourEmail
 
-## Deploy `helium`
+```
 
-``` bash
+### Deploy `helium`
 
-# Initialize your terraform providers:
+```bash
+
+# create tfvars file
+../create-tf-vars.sh
+
+# initialize
 terraform init
 
-# Format your terraform files:
-terraform fmt -recursive
-
-# Validate the terraform code is ready to apply:
+# validate
 terraform validate
 
-# If you have no errors you can create the resources
-# You must answer "yes" to 'Enter a value:' to create the resources
-terraform apply
+# create the resources
+terraform apply -auto-approve
+
+# generally takes about 10 minutes to complete
 
 ```
 
 ## Verify the deployment
 
-Log into the Azure portal and browse your three new resource groups
+Log into the Azure portal and browse your five new resource groups
 
-> TODO - should we have CLI commands for this? like curl, http, webv
->
-> TODO - docs on the `terraform.tfstate` file - security, where to store, etc.
 >
 > If the terraform plan command is redirected to a file, there will be secrets stored in that file!
 >
-> Be sure to not to remove the ignore *tfplan* in the .gitignore file
+> Be sure not to remove the ignore *tfplan* in the .gitignore file
+>
 
 ## Module Documentation
 
-Each module has a `README.md` file in the module directory under [`./src/modules/`](./src/modules/). You can reference the module documentation for the specific requirements of each module.
+Each module has a `README` file in the module directory under [`./src/modules/`](./src/modules/). You can reference the module documentation for the specific requirements of each module.
 
 The main calling Terraform script can be found at [`./src/root/main.tf`](./src/root/main.tf)
 
