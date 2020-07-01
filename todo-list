@@ -24,6 +24,7 @@
 - option to deploy to AKS is missing (I think this is OK - especially for this release)
 
  - Documentation Fix:  Update readme with all variable names per PR feedback from Anne 
+ - In the create-tf-vars.sh script we set He_Name = NAME.  Name must be at least 5 characters and have no special characters so we have to enforce in the helium READMe.
  
 ## Fixed in this branch
 
