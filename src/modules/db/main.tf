@@ -84,19 +84,3 @@ output "IMDB_IMPORT_DONE" {
 data "docker_registry_image" "imdb-import" {
   name = "retaildevcrew/imdb-import"
 }
-
-resource "docker_image" "imdb-import" {
-  name          = data.docker_registry_image.imdb-import.name
-  pull_triggers = ["${data.docker_registry_image.imdb-import.sha256_digest}"]
-}
-
-resource "docker_container" "imdb-import" {
-  for_each = var.INSTANCES
-  depends_on = [
-    azurerm_cosmosdb_sql_container.cosmosdb-movies
-  ]
-  name    = "imdb-importer${each.key}"
-  image   = docker_image.imdb-import.name
-  command = ["${azurerm_cosmosdb_account.cosmosdb.name}", "${azurerm_cosmosdb_account.cosmosdb.primary_master_key}", "imdb-${each.key}", "movies"]
-  rm      = true
-}
