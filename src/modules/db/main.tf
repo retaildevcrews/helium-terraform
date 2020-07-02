@@ -70,8 +70,7 @@ resource "azurerm_cosmosdb_sql_container" "cosmosdb-movies" {
 
 resource null_resource imdb-import {
   provisioner "local-exec" {
-    command = "docker pull retaildevcrew/imdb-import:latest && docker run --rm --name imdb-import retaildevcrew/imdb-import:latest -u \"${var.ACR_SP_ID}\" -p \"${var.ACR_SP_SECRET}\" \"${azurerm_cosmosdb_account.cosmosdb.name}\" \"${azurerm_cosmosdb_account.cosmosdb.primary_master_key}\" \"${azurerm_cosmosdb_sql_database.cosmosdb-imdb.name}\" \"${azurerm_cosmosdb_sql_container.cosmosdb-movies.name}\""
-  // command = "docker pull retaildevcrew/imdb-import:latest && docker run --rm --name imdb-import retaildevcrew/imdb-import:latest \"${azurerm_cosmosdb_account.cosmosdb.name}\" \"${azurerm_cosmosdb_account.cosmosdb.primary_master_key}\" \"${azurerm_cosmosdb_sql_database.cosmosdb-imdb.name}\" \"${azurerm_cosmosdb_sql_container.cosmosdb-movies.name}\""
+    command = "docker pull retaildevcrew/imdb-import:latest && docker run --rm --name imdb-import retaildevcrew/imdb-import:latest \"${azurerm_cosmosdb_account.cosmosdb.name}\" \"${azurerm_cosmosdb_account.cosmosdb.primary_master_key}\" \"${azurerm_cosmosdb_sql_database.cosmosdb-imdb.name}\" \"${azurerm_cosmosdb_sql_container.cosmosdb-movies.name}\""
   }
 }
 
@@ -79,4 +78,25 @@ output "IMDB_IMPORT_DONE" {
   depends_on  = [null_resource.imdb-import]
   value       = true
   description = "imdb-import complete"
+}
+// found this in the h-iac repo - was missing from here
+
+data "docker_registry_image" "imdb-import" {
+  name = "retaildevcrew/imdb-import"
+}
+
+resource "docker_image" "imdb-import" {
+  name          = data.docker_registry_image.imdb-import.name
+  pull_triggers = ["${data.docker_registry_image.imdb-import.sha256_digest}"]
+}
+
+resource "docker_container" "imdb-import" {
+  for_each = var.INSTANCES
+  depends_on = [
+    azurerm_cosmosdb_sql_container.cosmosdb-movies
+  ]
+  name    = "imdb-importer${each.key}"
+  image   = docker_image.imdb-import.name
+  command = ["${azurerm_cosmosdb_account.cosmosdb.name}", "${azurerm_cosmosdb_account.cosmosdb.primary_master_key}", "imdb-${each.key}", "movies"]
+  rm      = true
 }

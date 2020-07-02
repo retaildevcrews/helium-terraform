@@ -116,11 +116,11 @@ module "web" {
   WT_SEVERITY       = var.WT_SEVERITY
   WT_THRESHOLD      = var.WT_THRESHOLD
   WT_OPERATOR       = var.WT_OPERATOR
-  WV_FREQUENCY      = var.WT_FREQUENCY
-  WV_WINDOW_SIZE    = var.WT_WINDOW_SIZE
-  WV_SEVERITY       = var.WT_SEVERITY
-  WV_THRESHOLD      = var.WT_THRESHOLD
-  WV_OPERATOR       = var.WT_OPERATOR
+  WV_FREQUENCY      = var.WV_FREQUENCY
+  WV_WINDOW_SIZE    = var.WV_WINDOW_SIZE
+  WV_SEVERITY       = var.WV_SEVERITY
+  WV_THRESHOLD      = var.WV_THRESHOLD
+  WV_OPERATOR       = var.WV_OPERATOR
 }
 
 module "aci" {
