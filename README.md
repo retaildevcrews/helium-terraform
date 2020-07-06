@@ -64,6 +64,50 @@ nslookup ${He_Name}.azurecr.io
 
 ```
 
+### Set additional values
+
+```bash
+
+export He_Email=replaceWithYourEmail
+
+# change the location (optional)
+export He_Location=centralus
+
+# change the repo (optional - valid: helium-csharp, helium-java, helium-typescript)
+export He_Repo=helium-csharp
+
+```
+
+### Prepare your `terraform.tfvars` file to roll out resources in the subscription of your choice
+
+```bash
+
+# create terraform.tfvars and replace template values
+# replace He_Name
+cat ../example.tfvars | sed "s/<<He_Name>>/$He_Name/g" > terraform.tfvars
+
+# replace email
+sed -i "s/<<He_Location>>/$He_Location/g" terraform.tfvars
+
+# replace repo
+sed -i "s/<<He_Repo>>/$He_Repo/g" terraform.tfvars
+
+# replace email
+sed -i "s/<<He_Email>>/$He_Email/g" terraform.tfvars
+
+# replace TF_TENANT_ID
+sed -i "s/<<HE_TENANT_ID>>/$(az account show -o tsv --query tenantId)/g" terraform.tfvars
+
+# replace TF_SUB_ID
+sed -i "s/<<HE_SUB_ID>>/$(az account show -o tsv --query id)/g" terraform.tfvars
+
+# create a service principal
+# replace TF_CLIENT_SECRET
+sed -i "s/<<HE_CLIENT_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)/g" terraform.tfvars
+
+# replace TF_CLIENT_ID
+sed -i "s/<<HE_CLIENT_ID>>/$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)/g" terraform.tfvars
+
 ### Set email address
 
 ```bash
@@ -73,9 +117,7 @@ export He_Email=replaceWithYourEmail
 
 ```
 
-### Deploy `helium`
-
-```bash
+## Deploy `helium`
 
 # create tfvars file
 ../create-tf-vars.sh
@@ -86,10 +128,10 @@ terraform init
 # validate
 terraform validate
 
-# create the resources
+# If you have no errors you can create the resources
 terraform apply -auto-approve
 
-# generally takes about 10 minutes to complete
+# This generally takes about 10 minutes to complete
 
 ```
 
@@ -97,7 +139,6 @@ terraform apply -auto-approve
 
 Log into the Azure portal and browse your five new resource groups
 
->
 > If the terraform plan command is redirected to a file, there will be secrets stored in that file!
 >
 > Be sure not to remove the ignore *tfplan* in the .gitignore file
