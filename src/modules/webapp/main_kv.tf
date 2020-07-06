@@ -28,7 +28,6 @@ resource azurerm_key_vault kv {
 
 resource "azurerm_key_vault_access_policy" "web_app" {
   key_vault_id = azurerm_key_vault.kv.id
-
   tenant_id = var.TENANT_ID
   object_id = azurerm_app_service.helium-webapp.identity.0.principal_id
 
@@ -69,18 +68,14 @@ resource "azurerm_key_vault_secret" "appinsights" {
   key_vault_id = azurerm_key_vault.kv.id
 }
 
-resource "azurerm_key_vault_secret" "acr_sp_id" {
-  name         = "AcrUserId"
-  value        = var.ACR_SP_ID
-  key_vault_id = azurerm_key_vault.kv.id
-}
 resource "azurerm_key_vault_secret" "acr_sp_secret" {
   name         = "AcrPassword"
   value        = var.ACR_SP_SECRET
   key_vault_id = azurerm_key_vault.kv.id
 }
 
-//data "azurerm_key_vault_secret" "acr_sp_secret" {
-//  name         = "AcrPassword"
-//  key_vault_id = azurerm_key_vault.kv.id
-//}
+resource "azurerm_key_vault_secret" "acr_sp_id" {
+  name         = "AcrUserId"
+  value        = var.ACR_SP_ID
+  key_vault_id = azurerm_key_vault.kv.id
+}

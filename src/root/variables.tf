@@ -164,3 +164,4 @@ variable "WV_SEVERITY" {
   type        = string
   description = "The severity to assign to the alert with possible values of 0, 1, 2, 3, and 4 - the default is 3"
 }
+
