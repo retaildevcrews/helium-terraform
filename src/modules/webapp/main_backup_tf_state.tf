@@ -40,7 +40,7 @@ output "tfstate_primary_blob_connection_string" {
 }
 
 resource "azurerm_storage_container" "tfstate" {
-  name                  = "content"
+  name                  = "tfstatefile"
   storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }
@@ -57,7 +57,8 @@ terraform {
   backend "azurerm" {
     resource_group_name  = var.TFSTATE_RG_NAME
     storage_account_name = azurerm_storage_account.tfstate.name
-    container_file_name  = azurerm_storage_container.tfstate.name
-    key                  = "../../root/terraform.tfstate"
+    container_name  = azurerm_storage_container.tfstate.name
+    key             = "prod.terraform.tfstate"
+    primary_access_key = azurerm_storage_account.tfstate.primary_access_key
   }
 }

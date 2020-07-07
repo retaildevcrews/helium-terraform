@@ -24,7 +24,6 @@ variable "LOCATION" {
 variable "TENANT_ID" {
   type        = string
   description = "This is the tenant ID of the Azure subscription."
-
 }
 
 variable "COSMOS_URL" {
@@ -86,6 +85,7 @@ variable "TF_SUB_ID" {
   type        = string
   description = "The subscription ID in which to create these appInsights alerts"
 }
+
 variable "RT_FREQUENCY" {
   type        = string
   description = "The frequency to test the metric during Window Size represented in ISO 8601 duration format  This value must be les than WindowSize and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D"
