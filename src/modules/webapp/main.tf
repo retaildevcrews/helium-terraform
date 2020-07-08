@@ -86,7 +86,6 @@ resource azurerm_app_service helium-webapp {
     always_on                 = "true"
     app_command_line          = ""
     linux_fx_version          = "DOCKER|${var.NAME}/${var.REPO}:latest"
-  //  linux_fx_version          = "DOCKER|retaildevcrew/imdb-import:latest"
     use_32_bit_worker_process = "true"
   }
   identity {
