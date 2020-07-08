@@ -44,7 +44,7 @@ resource "azurerm_container_group" helium-aci {
     name  = "${var.NAME}-webv"
     image = "retaildevcrew/webvalidate:latest"
 // TODO - use variable for image?
-    commands = ["dotnet", "../webvalidate.dll", "--server", "${var.NAME}", "--files", "${var.CONTAINER_FILE_NAME}", "--base-url", "https://raw.githubusercontent.com/${var.NAME}/${var.REPO}/master/TestFiles/", "--run-loop", "--sleep", "${var.SLEEP_TIME}", "--telemetry-name", "${var.NAME}", "--telemetry-key", azurerm_application_insights.appIns.instrumentation_key]
+    commands = ["dotnet", "../webvalidate.dll", "--server", "${var.NAME}", "--files", "${var.CONTAINER_FILE_NAME}", "--base-url", "https://raw.githubusercontent.com/${var.NAME}/${var.REPO}/master/TestFiles/", "--run-loop", "--verbose", "--sleep", "${var.SLEEP_TIME}", "--telemetry-name", "${var.NAME}", "--telemetry-key", azurerm_application_insights.appIns.instrumentation_key]
     cpu      = "0.5"
     memory   = "1.5"
     ports {
