@@ -93,7 +93,6 @@ resource azurerm_app_service helium-webapp {
     }
 
   logs {
-//    docker_container          = "filesystem"
     http_logs {
       file_system {
         retention_in_days        =  30
@@ -106,6 +105,7 @@ resource azurerm_app_service helium-webapp {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
     "DOCKER_REGISTRY_SERVER_USERNAME"     = var.ACR_SP_ID
     "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.ACR_SP_SECRET
+// TODO - fix this
 //    DOCKER_REGISTRY_SERVER_PASSWORD = "@Microsoft.KeyVault(SecretUri=https://"${var.NAME-kv}".vault.azure.net/secrets/mysecret/ec96f02080254f109c51a1f14cdb1931)"
     "DOCKER_REGISTRY_SERVER_URL"          = "https://${var.NAME}.azurecr.io"
     "DOCKER_ENABLE_CI"                    = "true"
