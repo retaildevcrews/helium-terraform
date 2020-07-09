@@ -85,7 +85,7 @@ export He_Repo=helium-csharp
 ```bash
 
 # create tfvars file
-../create-tf-vars.sh
+./create-tf-vars.sh
 
 # initialize
 terraform init
