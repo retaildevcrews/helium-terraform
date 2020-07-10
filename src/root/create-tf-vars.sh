@@ -2,11 +2,17 @@
 
 # check if He_Name is valid
 
-He_Name_Size=${#He_Name}
-
-if [[ $He_Name_Size -lt 3 || $He_Name_Size -gt 12 ]]
+Name_Size=${#He_Name}
+if [[ $Name_Size -lt 3 || $Name_Size -gt 12 ]]
 then
   echo "Please set He_Name first and make sure it is between 3 and 12 characters in length with no special characters."
+  exit 1
+fi
+
+Email_Size=${#He_Email}
+if [[ $Email_Size -lt 6 ]]
+then
+  echo "Please export He_Email first and make sure it is a valid email."
   exit 1
 fi
 
