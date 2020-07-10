@@ -19,18 +19,6 @@
 * ```
 */
 
-resource "azurerm_application_insights" "appIns" {
-  name                = "${var.NAME}-webv"
-  location            = var.LOCATION
-  resource_group_name = var.ACI_RG_NAME
-  application_type    = "web"
-}
-
-output "instrumentation_key" {
-  value       = azurerm_application_insights.appIns.instrumentation_key
-  description = "Instrumentation Key for the webvalidate instance to be used by a dashboard module if you want a dashboard to monitor webv metrics"
-}
-
 resource "azurerm_container_group" helium-aci {
   depends_on = [
     var.APP_SERVICE_DONE
