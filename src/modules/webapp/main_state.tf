@@ -7,7 +7,7 @@ resource "random_string" "unique" {
 }
 
 resource "azurerm_storage_account" "tfstate" {
-  name                      = "${var.NAME}storage"
+  name                      = "${var.NAME}tfstoracct"
   resource_group_name       = var.TFSTATE_RG_NAME
   location                  = var.LOCATION
   account_tier              = "Standard"
@@ -40,13 +40,13 @@ output "tfstate_primary_blob_connection_string" {
 }
 
 resource "azurerm_storage_container" "tfstate" {
-  name                  = "tfstate"
+  name                  = "${var.NAME}-storcontainer"
   storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_blob" "tfstate" {
-  name                   = "tfstate"
+  name                   = "${var.NAME}-tf-blob"
   storage_account_name   = azurerm_storage_account.tfstate.name
   storage_container_name = azurerm_storage_container.tfstate.name
   type                   = "Block"
