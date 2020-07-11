@@ -9,6 +9,11 @@
     - can we add timing to prevent?
 
 - need to check all the logs to see if we're getting any timing errors
+  - webtest is created before web app - dashboard shows a lot of failures
+  - dashboard is created before web app
+  - tf-state file is pushed before TF completes, so it's not really backed up
+
+- we should be able to use map(string) for the dashboard variables so we only have to pass one variable instead of each individually
 
 - module readme files need to be updated and regenerated
 
