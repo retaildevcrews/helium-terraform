@@ -38,11 +38,6 @@ variable "LOCATION" {
   description = "The Azure Region in which all resources in this example should be created. Used by all modules"
 }
 
-variable "SLEEP_TIME" {
-  type        = number
-  description = "The amount of time to sleep before allowing another backend db request. Used by the ACI Module"
-}
-
 variable "CONTAINER_FILE_NAME" {
   type        = string
   description = "The file name to pass to the container command. Used by the ACI Module"
@@ -165,3 +160,7 @@ variable "WV_SEVERITY" {
   description = "The severity to assign to the alert with possible values of 0, 1, 2, 3, and 4 - the default is 3"
 }
 
+variable "WEBV_INSTANCES" {
+  type        = map(number)
+  description = "List of additional webv test locations"
+}
