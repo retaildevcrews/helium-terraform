@@ -58,7 +58,7 @@ sed -i "s/<<HE_CLIENT_ID>>/$(az ad sp show --id http://${He_Name}-tf-sp --query 
 
 # create a service principal
 # replace ACR_SP_SECRET
-sed -i "s/<<HE_ACR_SP_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-acr-sp --query password -o tsv)/g" terraform.tfvars
+sed -i "s/<<HE_ACR_SP_SECRET>>/$(az ad sp create-for-rbac --skip-assignment -n http://${He_Name}-acr-sp --query password -o tsv)/g" terraform.tfvars
 
 # replace ACR_SP_ID
 sed -i "s/<<HE_ACR_SP_ID>>/$(az ad sp show --id http://${He_Name}-acr-sp --query objectId -o tsv)/g" terraform.tfvars
