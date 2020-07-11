@@ -67,8 +67,8 @@ resource azurerm_app_service_plan helium-app-plan {
   kind                = "linux"
   reserved            = true
   sku {
-    tier = "Basic"
-    size = "B2"
+    tier = "Standard"
+    size = "S1"
   }
 }
 
@@ -86,7 +86,7 @@ resource azurerm_app_service helium-webapp {
     always_on                 = "true"
     app_command_line          = ""
     linux_fx_version          = "DOCKER|${var.NAME}.azurecr.io/${var.REPO}:latest"
-    use_32_bit_worker_process = "false"
+    use_32_bit_worker_process = "true"
   }
 
   identity {
