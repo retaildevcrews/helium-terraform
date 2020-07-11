@@ -7,8 +7,13 @@ TF_SUB_ID           = "<<HE_SUB_ID>>"
 TF_TENANT_ID        = "<<HE_TENANT_ID>>"
 ACR_SP_ID           = "<<HE_ACR_SP_ID>>"
 ACR_SP_SECRET       = "<<HE_ACR_SP_SECRET>>"
+WEBV_INSTANCES = {
+  "<<He_Location>>" = 1000
+  "eastus2" = 5000
+  "westeurope" = 15000
+  "southeastasia" = 30000
+}
 CONTAINER_FILE_NAME = "benchmark.json"
-SLEEP_TIME          = 1000
 COSMOS_RU           = "1000"
 ACTION_GROUP_NAME   = "<<He_Name>>-action-group"
 EMAIL_FOR_ALERTS    = "<<He_Email>>"
