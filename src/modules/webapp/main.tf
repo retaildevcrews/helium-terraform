@@ -88,6 +88,7 @@ resource azurerm_app_service helium-webapp {
     linux_fx_version          = "DOCKER|${var.NAME}.azurecr.io/${var.REPO}:latest"
     use_32_bit_worker_process = "false"
   }
+
   identity {
     type = "SystemAssigned"
     }

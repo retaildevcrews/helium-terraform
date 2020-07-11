@@ -21,7 +21,7 @@ resource azurerm_key_vault kv {
       "Delete",
       "Recover",
       "Backup",
-      "Restore",
+      "Restore"
     ]
   }
 }
@@ -33,7 +33,7 @@ resource "azurerm_key_vault_access_policy" "web_app" {
 
   secret_permissions = [
     "get",
-    "list",
+    "list"
   ]
 
 }
