@@ -13,7 +13,6 @@ NAME                = var.NAME
 LOCATION            = var.LOCATION
 INSTANCES           = var.INSTANCES
 CONTAINER_FILE_NAME = var.CONTAINER_FILE_NAME
-SLEEP_TIME          = var.SLEEP_TIME
 ACI_RG_NAME         = azurerm_resource_group.helium-aci.name
 }
 ```
