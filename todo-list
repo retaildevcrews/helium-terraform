@@ -6,10 +6,6 @@
   - ACR ci-cd webhook is setup - need to test
   - docker container logging isn't enabled
 
-- need to deploy log analytics
-- need to deploy 3 additional smokers
-- need to add log analytics id / key to smoker command line
-
 - there is an error in the app service log
   - the first time the app starts, key vault isn't set and you get a usage message
     - can we add timing to prevent?
