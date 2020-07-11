@@ -1,7 +1,7 @@
 /**
-* # Parent Template Properties  
+* # Parent Template Properties
 *
-* This is the parent Terraform Template used to call the component modules to create the infrastructure and deploy the [Helium](https://github.com/retaildevcrews/helium) application.  
+* This is the parent Terraform Template used to call the component modules to create the infrastructure and deploy the [Helium](https://github.com/retaildevcrews/helium) application.
 *
 * The only resurces created in the template are the resource groups that each Service will go into. It is advised to create a terraform.tfvars file to assign values to the variables in the `variables.tf` file.
 *
@@ -127,9 +127,9 @@ module "aci" {
   source              = "../modules/aci"
   NAME                = var.NAME
   LOCATION            = var.LOCATION
+  WEBV_INSTANCES      = var.WEBV_INSTANCES
   REPO                = var.REPO
   CONTAINER_FILE_NAME = var.CONTAINER_FILE_NAME
-  SLEEP_TIME          = var.SLEEP_TIME
   ACI_RG_NAME         = azurerm_resource_group.helium-aci.name
   APP_SERVICE_DONE    = "${module.web.APP_SERVICE_DONE}"
 }
