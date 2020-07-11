@@ -1,8 +1,6 @@
 ## TODO
 
 - Web Deploy
-  - the image is pulled from docker hub
-    - pull image from ACR using Key Vault credentials
   - ACR ci-cd webhook is setup - need to test
   - docker container logging isn't enabled
 
