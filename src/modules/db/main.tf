@@ -42,17 +42,6 @@ output "ro_key" {
   description = "The read Only key for the CosmosDB to be used by the Helium Application. This is used to pass into the webapp module"
 }
 
-
-output "cosmos_name" {
-  value       = azurerm_cosmosdb_account.cosmosdb.name
-  description = "The name of the CosmosDb instance"
-}
-
-output "COSMOS_RG_NAME" {
-  value       = azurerm_cosmosdb_account.cosmosdb.resource_group_name
-  description = "The name of the CosmosDb resource group"
-}
-
 resource "azurerm_cosmosdb_sql_database" "cosmosdb-imdb" {
   name                = var.COSMOS_DB
   resource_group_name = var.COSMOS_RG_NAME

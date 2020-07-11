@@ -92,7 +92,7 @@ module "web" {
   APP_RG_NAME       = azurerm_resource_group.helium-app.name
   TFSTATE_RG_NAME   = azurerm_resource_group.tfstate.name
   TENANT_ID         = var.TF_TENANT_ID
-  COSMOS_RG_NAME    = "${module.db.COSMOS_RG_NAME}"
+  COSMOS_RG_NAME    = azurerm_resource_group.cosmos.name
   COSMOS_URL        = "https://${var.NAME}.documents.azure.com:443/"
   COSMOS_KEY        = module.db.ro_key
   COSMOS_DB         = var.COSMOS_DB

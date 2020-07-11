@@ -52,7 +52,7 @@ Note: The evaluation frequency must be less than or equal to the window size.
 * LOCATION    = var.LOCATION
 * APP_RG_NAME = azurerm_resource_group.helium-app.name
 * TENANT_ID   = var.TF_TENANT_ID
-* COSMOS_URL  = "https://${module.db.cosmos_name}.documents.azure.com:443/"
+* COSMOS_URL  = "https://${var.NAME}.documents.azure.com:443/"
 * COSMOS_KEY  = module.db.ro_key
 * COSMOS_DB   = "imdb"
 * COSMOS_COL  = "movies"
