@@ -1,4 +1,5 @@
 resource "azurerm_dashboard" "helium-dashboard" {
+  depends_on          = [ var.APP_SERVICE_DONE ]
   name                = "Helium-Dashboard-${var.NAME}"
   resource_group_name = var.APP_RG_NAME
   location            = var.LOCATION
