@@ -15,7 +15,6 @@ WEBV_INSTANCES = {
 }
 CONTAINER_FILE_NAME = "benchmark.json"
 COSMOS_RU           = "1000"
-ACTION_GROUP_NAME   = "<<He_Name>>-action-group"
 EMAIL_FOR_ALERTS    = "<<He_Email>>"
 RT_FREQUENCY        = "PT15M"
 RT_WINDOW_SIZE      = "PT30M"
