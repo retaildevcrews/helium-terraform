@@ -1,5 +1,14 @@
 ## TODO
 
+- need to address the design
+  - currently, everything is deployed as a single TF apply
+  - per our original design, cosmos and ACR have separate lifecyles from the app / webv
+
+- verify TF and quick start setup are identical (or document deltas)
+  - may need to scrub names
+
+- update readme with changes
+
 - Web Deploy
   - ACR ci-cd webhook is setup - need to test
   - docker container logging isn't enabled
@@ -9,14 +18,16 @@
     - can we add timing to prevent?
 
 - need to check all the logs to see if we're getting any timing errors
-  - webtest is created before web app - dashboard shows a lot of failures
-  - dashboard is created before web app
   - tf-state file is pushed before TF completes, so it's not really backed up
+    - I delayed it as long as I could, but it's not the latest
+    - should be a separate TF step
 
-- we should be able to use map(string) for the dashboard variables so we only have to pass one variable instead of each individually
+- we should be able to use an object for the dashboard variables so we only have to pass one variable instead of each individually
 
 - module readme files need to be updated and regenerated
 
 - need to test dashboard and alerts to make sure they are the same between manual setup and terraform setup
+
+- scrub for naming / consistency / variables (we have a LOT)
 
 - option to deploy to AKS is missing (I think this is OK - especially for this release)
