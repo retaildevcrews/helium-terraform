@@ -19,7 +19,7 @@ variable "CONTAINER_FILE_NAME" {
 }
 
 variable "APP_SERVICE_DONE" {
-  description = "ACI module dependency complete"
+  description = "App Service dependency complete"
   type        = bool
 }
 

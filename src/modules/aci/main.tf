@@ -18,22 +18,21 @@
 * ```
 */
 
-resource azurerm_log_analytics_workspace helium-log {
-  name                = "${var.NAME}-log"
+resource azurerm_log_analytics_workspace helium-logs {
+  name                = "${var.NAME}-webv-logs"
   location            = var.LOCATION
   resource_group_name = var.ACI_RG_NAME
   sku                 = "PerGB2018"
-  retention_in_days   = 30
+  retention_in_days   = 90
 }
 
 resource "azurerm_container_group" helium-aci {
   depends_on = [
     var.APP_SERVICE_DONE,
-    azurerm_log_analytics_workspace.helium-log
+    azurerm_log_analytics_workspace.helium-logs
   ]
   for_each            = var.WEBV_INSTANCES
   name                = "${var.NAME}-webv-${each.key}"
-  # dns_name_label      = "${var.NAME}-webv-${each.key}"
   location            = each.key
   resource_group_name = var.ACI_RG_NAME
   os_type             = "Linux"
@@ -53,8 +52,8 @@ resource "azurerm_container_group" helium-aci {
 
   diagnostics {
     log_analytics {
-      workspace_id = azurerm_log_analytics_workspace.helium-log.workspace_id
-      workspace_key = azurerm_log_analytics_workspace.helium-log.primary_shared_key
+      workspace_id  = azurerm_log_analytics_workspace.helium-logs.workspace_id
+      workspace_key = azurerm_log_analytics_workspace.helium-logs.primary_shared_key
     }
   }
 
@@ -62,4 +61,10 @@ resource "azurerm_container_group" helium-aci {
     environment = var.NAME,
     repo        = var.REPO
   }
+}
+
+output "ACI_DONE" {
+  depends_on  = [azurerm_container_group.helium-aci]
+  value       = true
+  description = "ACI setup is complete"
 }
