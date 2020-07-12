@@ -35,27 +35,27 @@ provider "azuread" {
 }
 
 resource "azurerm_resource_group" "helium-acr" {
-  name     = "${var.NAME}-acr-rg"
+  name     = "${var.NAME}-rg-acr"
   location = var.LOCATION
 }
 
 resource "azurerm_resource_group" "cosmos" {
-  name     = "${var.NAME}-cosmos-rg"
+  name     = "${var.NAME}-rg-cosmos"
   location = var.LOCATION
 }
 
 resource "azurerm_resource_group" "helium-app" {
-  name     = "${var.NAME}-app-rg"
+  name     = "${var.NAME}-rg-app"
   location = var.LOCATION
 }
 
 resource "azurerm_resource_group" "helium-aci" {
-  name     = "${var.NAME}-webv-rg"
+  name     = "${var.NAME}-rg-webv"
   location = var.LOCATION
 }
 
 resource "azurerm_resource_group" "tfstate" {
-  name     = "${var.NAME}-tf-rg"
+  name     = "${var.NAME}-rg-tf"
   location = var.LOCATION
 }
 
@@ -77,8 +77,8 @@ module "db" {
   COSMOS_RU      = var.COSMOS_RU
   COSMOS_DB      = var.COSMOS_DB
   COSMOS_COL     = var.COSMOS_COL
-  ACR_SP_ID         = var.ACR_SP_ID
-  ACR_SP_SECRET     = var.ACR_SP_SECRET
+  ACR_SP_ID      = var.ACR_SP_ID
+  ACR_SP_SECRET  = var.ACR_SP_SECRET
 }
 
 module "web" {
@@ -98,8 +98,9 @@ module "web" {
   COSMOS_DB         = var.COSMOS_DB
   COSMOS_COL        = var.COSMOS_COL
   IMDB_IMPORT_DONE  = "${module.db.IMDB_IMPORT_DONE}"
+  APP_SERVICE_DONE  = "${module.web.APP_SERVICE_DONE}"
+  ACI_DONE          = "${module.aci.ACI_DONE}"
   TF_SUB_ID         = var.TF_SUB_ID
-  ACTION_GROUP_NAME = var.ACTION_GROUP_NAME
   EMAIL_FOR_ALERTS  = var.EMAIL_FOR_ALERTS
   RT_THRESHOLD      = var.RT_THRESHOLD
   RT_OPERATOR       = var.RT_OPERATOR
