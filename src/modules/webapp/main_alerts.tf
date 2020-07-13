@@ -2,7 +2,7 @@ resource "random_uuid" "appsguid" {}
 resource "random_uuid" "webtestguid" {}
 
 resource "azurerm_monitor_action_group" "helium-action-group" {
-  name                      = "${var.NAME}-acton-group"
+  name                      = "${var.NAME}-action-group"
   resource_group_name       = var.APP_RG_NAME
   short_name                = "${var.NAME}"
   email_receiver {
