@@ -16,23 +16,56 @@ WEBV_INSTANCES = {
 CONTAINER_FILE_NAME = "benchmark.json"
 COSMOS_RU           = "1000"
 EMAIL_FOR_ALERTS    = "<<He_Email>>"
-RT_FREQUENCY        = "PT15M"
-RT_WINDOW_SIZE      = "PT30M"
-RT_SEVERITY         = "2"
-RT_THRESHOLD        = "900"
-RT_OPERATOR         = "GreaterThan"
-MR_FREQUENCY        = "PT1M"
-MR_WINDOW_SIZE      = "PT15M"
-MR_SEVERITY         = "2"
-MR_THRESHOLD        = "900"
-MR_OPERATOR         = "GreaterThan"
-WT_FREQUENCY        = "PT5M"
-WT_WINDOW_SIZE      = "PT15M"
-WT_SEVERITY         = "2"
-WT_THRESHOLD        = "1"
-WT_OPERATOR         = "LessThan"
-WV_FREQUENCY        = "PT1M"
-WV_WINDOW_SIZE      = "PT5M"
-WV_SEVERITY         = "2"
-WV_THRESHOLD        = "1"
-WV_OPERATOR         = "LessThan"
+ALERT_RULES         = {
+  rt_alerts = {
+    name = "response-time-alert"
+    frequency = "PT15M"
+    window_size = "PT30M"
+    description = "Server Response Time Too High"
+    severity = 2
+    enabled = false
+    operator = "GreaterThan"
+    threshold = "900"
+    aggregation = "Average"
+    metric_name = "requests/duration"
+    },
+  mr_alerts = {
+    name = "requests-too-high-alert"
+    frequency = "PT1M"
+    window_size = "PT15M"
+    description = "Requests Too High"
+    severity = 2
+    enabled = false
+    operator = "GreaterThan"
+    threshold = "900"
+    aggregation = "Count"
+    metric_name = "requests/count"
+  },
+  wv_alerts = {
+    name = "requests-too-low-alert"
+    frequency = "PT1M"
+    window_size = "PT5M"
+    description = "Requests Too Low"
+    severity = 2
+    enabled = true
+    operator = "LessThan"
+    threshold = "1"
+    aggregation = "Count"
+    metric_name = "requests/count"
+  }
+}
+WEBTEST_ALERT_RULES     = {
+  wt_rules = {
+    name = "requests-too-low-alert"
+    frequency = "PT5M"
+    window_size = "PT15M"
+    description = "Web Test Alert"
+    severity = 2
+    enabled = false
+    operator = "LessThan"
+    threshold = "1"
+    aggregation = "Average"
+    metric_name = "availabilityResults/availabilityPercentage"
+  }
+}
+
