@@ -71,107 +71,37 @@ variable "EMAIL_FOR_ALERTS" {
   description = "The name of the email or email group to receive alerts"
 }
 
-variable "RT_THRESHOLD" {
-  type        = string
-  description = "This is a number that is used with Operator to activate the alert, for example if threshold was set to 20 and Operator was GreaterThan, the alert would activate at 21"
-}
-
-variable "RT_FREQUENCY" {
-  type        = string
-  description = "The frequency to test the metric during Window Size represented in ISO 8601 duration format  This value must be les than WindowSize and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D"
-}
-
-variable "RT_OPERATOR" {
-  type        = string
-  description = "The criteria operator - possible values are Equals NotEquals GreaterThan TreaterThanOrEqual LessThan and LessThanOrEqual"
-}
-
-variable "RT_WINDOW_SIZE" {
-  type        = string
-  description = "The period of time use to monitor alert activity represented in ISO 8601 duration format  This value must be greater than frequency and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D - the default if PT5M"
-}
-
-variable "RT_SEVERITY" {
-  type        = string
-  description = "The severity to assign to the alert with possible values of 0, 1, 2, 3, and 4 - the default is 3"
-}
-
-variable "MR_THRESHOLD" {
-  type        = string
-  description = "This is a number that is used with Operator to activate the alert, for example if threshold was set to 20 and Operator was GreaterThan, the alert would activate at 21"
-}
-
-variable "MR_FREQUENCY" {
-  type        = string
-  description = "The frequency to test the metric during Window Size represented in ISO 8601 duration format  This value must be less than windowSize and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D"
-}
-
-variable "MR_OPERATOR" {
-  type        = string
-  description = "The criteria operator - possible values are Equals NotEquals GreaterThan TreaterThanOrEqual LessThan and LessThanOrEqual"
-}
-
-variable "MR_WINDOW_SIZE" {
-  type        = string
-  description = "The period of time use to monitor alert activity represented in ISO 8601 duration format  This value must be greater than frequency and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D - the default if PT5M"
-}
-
-variable "MR_SEVERITY" {
-  type        = string
-  description = "The severity to assign to the alert with possible values of 0, 1, 2, 3, and 4 - the default is 3"
-}
-
-variable "WT_THRESHOLD" {
-  type        = string
-  description = "This is a number that is used with Operator to activate the alert, for example if threshold was set to 20 and Operator was GreaterThan, the alert would activate at 21"
-}
-
-variable "WT_FREQUENCY" {
-  type        = string
-  description = "The frequency to test the metric during Window Size represented in ISO 8601 duration format  This value must be less than windowSize and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D"
-}
-
-variable "WT_OPERATOR" {
-  type        = string
-  description = "The criteria operator - possible values are Equals NotEquals GreaterThan TreaterThanOrEqual LessThan and LessThanOrEqual"
-}
-
-variable "WT_WINDOW_SIZE" {
-  type        = string
-  description = "The period of time use to monitor alert activity represented in ISO 8601 duration format  This value must be greater than frequency and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D - the default if PT5M"
-}
-
-variable "WT_SEVERITY" {
-  type        = string
-  description = "The severity to assign to the alert with possible values of 0, 1, 2, 3, and 4 - the default is 3"
-}
-
-variable "WV_THRESHOLD" {
-  type        = string
-  description = "This is a number that is used with Operator to activate the alert, for example if threshold was set to 20 and Operator was GreaterThan, the alert would activate at 21"
-}
-
-variable "WV_FREQUENCY" {
-  type        = string
-  description = "The frequency to test the metric during Window Size represented in ISO 8601 duration format  This value must be less than windowSize and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D"
-}
-
-variable "WV_OPERATOR" {
-  type        = string
-  description = "The criteria operator - possible values are Equals NotEquals GreaterThan TreaterThanOrEqual LessThan and LessThanOrEqual"
-}
-
-variable "WV_WINDOW_SIZE" {
-  type        = string
-  description = "The period of time use to monitor alert activity represented in ISO 8601 duration format  This value must be greater than frequency and possible values are PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H and PT1D - the default is PT5M"
-}
-
-variable "WV_SEVERITY" {
-  type        = string
-  description = "The severity to assign to the alert with possible values of 0, 1, 2, 3, and 4 - the default is 3"
-}
-
 variable "WEBV_INSTANCES" {
   type        = map(number)
   description = "List of additional webv test locations"
+}
+variable "ALERT_RULES" {
+  type = map(object({
+    name        = string #i.e. "response-time-alert"
+    frequency   = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H
+    window_size = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H,PT6H,PT12H,PT24H
+    description = string
+    severity    = number # Allowed Values: 0,1,2,3,4
+    enabled     = bool   # Specifies is Alert is enabled
+    operator    = string # Allowed Values: Equals,NotEquals,GreaterThan,GeaterThanOrEqual,LessThan,LessThanOrEqual
+    threshold   = string # The threshold value at which the alert is activated.
+    aggregation = string #Allowed Values: Average,Minimum,Maximum,Total,Count
+    metric_name = string
+  }))
+  description = "These are customizable values required to set standard metric alerts. See https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-metric-overview for details"
+}
+variable "WEBTEST_ALERT_RULES" {
+  type = map(object({
+    name        = string #i.e. "response-time-alert"
+    frequency   = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H
+    window_size = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H,PT6H,PT12H,PT24H
+    description = string
+    severity    = number # Allowed Values: 0,1,2,3,4
+    enabled     = bool   # Specifies is Alert is enabled
+    operator    = string # Allowed Values: Equals,NotEquals,GreaterThan,GeaterThanOrEqual,LessThan,LessThanOrEqual
+    threshold   = string # The threshold value at which the alert is activated.
+    aggregation = string #Allowed Values: Average,Minimum,Maximum,Total,Count
+    metric_name = string
+  }))
+  description = "These are customizable values required to set webtest alerts which require a dimension criteria. See https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-metric-overview for details"
 }

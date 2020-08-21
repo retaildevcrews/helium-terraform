@@ -91,7 +91,7 @@ resource azurerm_app_service helium-webapp {
 
   identity {
     type = "SystemAssigned"
-    }
+  }
 
   logs {
     http_logs {

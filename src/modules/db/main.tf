@@ -71,6 +71,6 @@ output "IMDB_IMPORT_DONE" {
 // found this in the h-iac repo - was missing from here
 
 data "docker_registry_image" "imdb-import" {
-// TODO - use variable name
+  // TODO - use variable name
   name = "retaildevcrew/imdb-import"
 }

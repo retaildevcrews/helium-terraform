@@ -38,8 +38,8 @@ resource "azurerm_container_group" helium-aci {
   os_type             = "Linux"
 
   container {
-    name  = "${var.NAME}-webv-${each.key}"
-    image = "retaildevcrew/webvalidate:debug"
+    name     = "${var.NAME}-webv-${each.key}"
+    image    = "retaildevcrew/webvalidate:debug"
     commands = ["dotnet", "../webvalidate.dll", "--server", "${var.NAME}", "--files", "${var.CONTAINER_FILE_NAME}", "--base-url", "https://raw.githubusercontent.com/retaildevcrews/${var.REPO}/master/TestFiles/", "--run-loop", "--sleep", "${each.value}", "--summary-minutes", "5", "--json-log", "--tag", "${each.key}"]
     cpu      = "0.5"
     memory   = "1.5"
