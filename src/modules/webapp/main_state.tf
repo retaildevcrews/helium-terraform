@@ -40,13 +40,13 @@ output "tfstate_primary_blob_connection_string" {
 }
 
 resource "azurerm_storage_container" "tfstate" {
-  name                   = "${var.NAME}-tf-state"
+  name                  = "${var.NAME}-tf-state"
   storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_blob" "tfstate" {
-  depends_on             = [ var.ACI_DONE ]
+  depends_on             = [var.ACI_DONE]
   name                   = "terraform.tfstate"
   storage_account_name   = azurerm_storage_account.tfstate.name
   storage_container_name = azurerm_storage_container.tfstate.name
