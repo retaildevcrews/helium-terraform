@@ -2,9 +2,9 @@ resource "random_uuid" "appsguid" {}
 resource "random_uuid" "webtestguid" {}
 
 resource "azurerm_monitor_action_group" "helium-action-group" {
-  name                      = "${var.NAME}-action-group"
-  resource_group_name       = var.APP_RG_NAME
-  short_name                = var.NAME
+  name                = "${var.NAME}-action-group"
+  resource_group_name = var.APP_RG_NAME
+  short_name          = var.NAME
   email_receiver {
     name                    = "${var.NAME}-alert-receiver"
     email_address           = var.EMAIL_FOR_ALERTS
@@ -13,7 +13,7 @@ resource "azurerm_monitor_action_group" "helium-action-group" {
 }
 
 resource "azurerm_application_insights_web_test" "helium-web-test" {
-  depends_on              = [
+  depends_on = [
     var.APP_SERVICE_DONE,
     azurerm_monitor_action_group.helium-action-group #TODO Modify depends on to remove hard dependency
   ]
@@ -37,8 +37,8 @@ XML
 }
 
 resource "azurerm_monitor_metric_alert" "generic-alert" {
-  for_each = var.ALERT_RULES
-  depends_on          = [ azurerm_application_insights_web_test.helium-web-test ]
+  for_each            = var.ALERT_RULES
+  depends_on          = [azurerm_application_insights_web_test.helium-web-test]
   name                = "${var.NAME}-${each.value["name"]}"
   resource_group_name = var.APP_RG_NAME
   scopes              = [azurerm_application_insights.helium.id]
@@ -56,14 +56,14 @@ resource "azurerm_monitor_metric_alert" "generic-alert" {
     threshold        = each.value["threshold"]
   }
   action {
-    action_group_id   = azurerm_monitor_action_group.helium-action-group.id
+    action_group_id = azurerm_monitor_action_group.helium-action-group.id
   }
 }
 
 
 resource "azurerm_monitor_metric_alert" "web-test-alert" {
-  for_each = var.WEBTEST_ALERT_RULES
-  depends_on          = [ azurerm_application_insights_web_test.helium-web-test ]
+  for_each            = var.WEBTEST_ALERT_RULES
+  depends_on          = [azurerm_application_insights_web_test.helium-web-test]
   name                = "${var.NAME}-${each.value["name"]}"
   resource_group_name = var.APP_RG_NAME
   scopes              = [azurerm_application_insights.helium.id]
@@ -80,13 +80,13 @@ resource "azurerm_monitor_metric_alert" "web-test-alert" {
     operator         = each.value["operator"]
     threshold        = each.value["threshold"]
     dimension {
-      name            = "availabilityResult/location"
-      operator        = "Include"
-      values          = ["*"]
+      name     = "availabilityResult/location"
+      operator = "Include"
+      values   = ["*"]
     }
   }
   action {
-    action_group_id   = azurerm_monitor_action_group.helium-action-group.id
+    action_group_id = azurerm_monitor_action_group.helium-action-group.id
   }
 }
 
