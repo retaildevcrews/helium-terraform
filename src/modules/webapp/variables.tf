@@ -94,31 +94,31 @@ variable "TF_SUB_ID" {
 
 variable "ALERT_RULES" {
   type = map(object({
-    name = string
-    frequency = string
-    window_size = string
+    name = string #i.e. "response-time-alert"
+    frequency = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H
+    window_size = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H,PT6H,PT12H,PT24H
     description = string
-    severity = number
-    enabled = bool
-    operator = string
-    threshold = string
-    aggregation = string
+    severity = number # Allowed Values: 0,1,2,3,4
+    enabled = bool # Specifies is Alert is enabled
+    operator = string # Allowed Values: Equals,NotEquals,GreaterThan,GeaterThanOrEqual,LessThan,LessThanOrEqual
+    threshold = string # The threshold value at which the alert is activated.
+    aggregation = string #Allowed Values: Average,Minimum,Maximum,Total,Count
     metric_name = string
   }))
-  description = ""
+  description = "These are customizable values required to set standard metric alerts. See https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-metric-overview for details"
 }
 variable "WEBTEST_ALERT_RULES" {
   type = map(object({
-    name = string
-    frequency = string
-    window_size = string
+    name = string #i.e. "response-time-alert"
+    frequency = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H
+    window_size = string # Allowed Values: PT1M,PT5M,PT15M,PT30M,PT1H,PT6H,PT12H,PT24H
     description = string
-    severity = number
-    enabled = bool
-    operator = string
-    threshold = string
-    aggregation = string
+    severity = number # Allowed Values: 0,1,2,3,4
+    enabled = bool # Specifies is Alert is enabled
+    operator = string # Allowed Values: Equals,NotEquals,GreaterThan,GeaterThanOrEqual,LessThan,LessThanOrEqual
+    threshold = string # The threshold value at which the alert is activated.
+    aggregation = string #Allowed Values: Average,Minimum,Maximum,Total,Count
     metric_name = string
   }))
-  description = ""
+  description = "These are customizable values required to set webtest alerts which require a dimension criteria. See https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-metric-overview for details"
 }

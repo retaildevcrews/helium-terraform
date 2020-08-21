@@ -56,7 +56,7 @@ ALERT_RULES         = {
 }
 WEBTEST_ALERT_RULES     = {
   wt_rules = {
-    name = "requests-too-low-alert"
+    name = "web-test-alert"
     frequency = "PT5M"
     window_size = "PT15M"
     description = "Web Test Alert"
