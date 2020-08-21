@@ -78,7 +78,7 @@ data "docker_registry_image" "imdb-import" {
 resource "azurerm_monitor_action_group" "cosmos-action-group" {
   name                      = "cosmos-action-group"
   resource_group_name       = var.COSMOS_RG_NAME
-  short_name                = "${var.NAME}"
+  short_name                = var.NAME
   email_receiver {
     name                    = "${var.NAME}-alert-receiver"
     email_address           = var.EMAIL_FOR_ALERTS
