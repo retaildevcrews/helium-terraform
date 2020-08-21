@@ -29,6 +29,12 @@ variable "COSMOS_COL" {
   description = "The Cosmos DB collection name"
   default     = "movies"
 }
+
+variable "EMAIL_FOR_ALERTS" {
+  type        = string
+  description = "The name of the email or email group to receive alerts"
+}
+
 variable "REPO" {
   type        = string
   description = "The helium repo"
