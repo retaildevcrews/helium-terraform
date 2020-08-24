@@ -99,7 +99,7 @@ resource "azurerm_monitor_metric_alert" "cosmos-alert" {
   enabled             = true
   criteria {
     metric_namespace = "Microsoft.DocumentDB/databaseAccounts"
-    metric_name      = "requests/count"
+    metric_name      = "TotalRequests"
     aggregation      = "Count"
     operator         = "GreaterThan"
     threshold        = "0"
