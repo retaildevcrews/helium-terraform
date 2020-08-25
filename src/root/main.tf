@@ -70,16 +70,16 @@ module "acr" {
 }
 
 module "db" {
-  source              = "../modules/db"
-  NAME                = var.NAME
-  LOCATION            = var.LOCATION
-  COSMOS_RG_NAME      = azurerm_resource_group.cosmos.name
-  COSMOS_RU           = var.COSMOS_RU
-  COSMOS_DB           = var.COSMOS_DB
-  COSMOS_COL          = var.COSMOS_COL
-  EMAIL_FOR_ALERTS    = var.EMAIL_FOR_ALERTS
-  ACR_SP_ID           = var.ACR_SP_ID
-  ACR_SP_SECRET       = var.ACR_SP_SECRET
+  source           = "../modules/db"
+  NAME             = var.NAME
+  LOCATION         = var.LOCATION
+  COSMOS_RG_NAME   = azurerm_resource_group.cosmos.name
+  COSMOS_RU        = var.COSMOS_RU
+  COSMOS_DB        = var.COSMOS_DB
+  COSMOS_COL       = var.COSMOS_COL
+  EMAIL_FOR_ALERTS = var.EMAIL_FOR_ALERTS
+  ACR_SP_ID        = var.ACR_SP_ID
+  ACR_SP_SECRET    = var.ACR_SP_SECRET
 }
 
 module "web" {
