@@ -21,8 +21,8 @@ DEBIAN_FRONTEND=dialog
 
 # install terraform
 pushd ~
-wget https://releases.hashicorp.com/terraform/0.12.21/terraform_0.12.21_linux_amd64.zip
-unzip terraform_0.12.21_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/0.13.0/terraform_0.13.0_linux_amd64.zip
+unzip terraform_0.13.0_linux_amd64.zip
 sudo install terraform /usr/local/bin/
 popd
 
