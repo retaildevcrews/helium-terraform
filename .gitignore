@@ -15,6 +15,7 @@
 
 *tfstate*
 *tfplan*
+src/root/main_tf_state.tf
 
 .vscode/
 
