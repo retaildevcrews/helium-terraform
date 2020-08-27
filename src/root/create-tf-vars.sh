@@ -93,7 +93,7 @@ fi
 
 # retrieve storage account access key
 if echo ${TFSTATE_RG_NAME} > /dev/null 2>&1; then
-    if ! export ARM_ACCESS_KEY=$(az storage account keys list --resource-group $TFSTATE_RG_NAME --account-name $TFSA_NAME --query [0].value -o tsv); then
+    if ! ARM_ACCESS_KEY=$(az storage account keys list --resource-group $TFSTATE_RG_NAME --account-name $TFSA_NAME --query [0].value -o tsv); then
         echo "ERROR: Failed to Retrieve Storage Account Access Key"
         exit 1
     fi
