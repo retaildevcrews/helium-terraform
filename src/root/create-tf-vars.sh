@@ -72,7 +72,7 @@ echo "Creating the TFState Resource Group"
 if echo ${TFSTATE_RG_NAME} > /dev/null 2>&1 && echo ${He_Location} > /dev/null 2>&1; then
     if ! az group create --name ${TFSTATE_RG_NAME} --location ${He_Location} -o table; then
         echo "ERROR: failed to create the resource group"
-        #exit 1
+        exit 1
     fi
     echo "Created Resource Group: ${TFSTATE_RG_NAME} in ${TF_LOCATION}"
 fi
@@ -84,7 +84,7 @@ echo "Creating State File Storage Account and Container"
 if echo ${TFSUB_ID} > /dev/null 2>&1; then
     if ! az storage account create --resource-group $TFSTATE_RG_NAME --name $TFSA_NAME --sku Standard_LRS --encryption-services blob -o table; then
         echo "ERROR: Failed to create Storage Account"
-        #exit 1
+        exit 1
     fi
     echo "TF State Storage Account Created. Name = $TFSA_NAME"
     sleep 20s
@@ -94,7 +94,7 @@ fi
 if echo ${TFSTATE_RG_NAME} > /dev/null 2>&1; then
     if ! export ARM_ACCESS_KEY=$(az storage account keys list --resource-group $TFSTATE_RG_NAME --account-name $TFSA_NAME --query [0].value -o tsv); then
         echo "ERROR: Failed to Retrieve Storage Account Access Key"
-        #exit 1
+        exit 1
     fi
     echo "TF State Storage Account Access Key = $ARM_ACCESS_KEY"
 fi
@@ -102,7 +102,7 @@ fi
 if echo ${TFSTATE_RG_NAME} > /dev/null 2>&1; then
     if ! az storage container create --name "container${TFSA_NAME}" --account-name $TFSA_NAME --account-key $ARM_ACCESS_KEY -o table; then
         echo "ERROR: Failed to Retrieve Storage Container"
-        #exit 1
+        exit 1
     fi
     echo "TF State Storage Account Container Created"
     export TFSA_CONTAINER=$(az storage container show --name "container${TFSA_NAME}" --account-name ${TFSA_NAME} --account-key ${ARM_ACCESS_KEY} --query name -o tsv)
