@@ -32,7 +32,7 @@ fi
 
 cat ../example.tfvars > terraform.tfvars
 # replace name
-sed "s|<<He_Name>>|$He_Name|" terraform.tfvars terraform.tfvars > terraform.tfvars
+sed "s|<<He_Name>>|$He_Name|" terraform.tfvars > terraform.tfvars
 
 # replace location
 sed "s|<<He_Location>>|$He_Location|" terraform.tfvars > terraform.tfvars
