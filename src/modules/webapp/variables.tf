@@ -66,11 +66,6 @@ variable "ACI_DONE" {
   type        = bool
 }
 
-variable "TFSTATE_RG_NAME" {
-  type        = string
-  description = "The Azure Resource Group the tfstate files should be added to"
-}
-
 variable "REPO" {
   type        = string
   description = "The helium repo"

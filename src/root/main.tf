@@ -86,7 +86,6 @@ module "web" {
   ACR_SP_ID           = var.ACR_SP_ID
   ACR_SP_SECRET       = var.ACR_SP_SECRET
   APP_RG_NAME         = azurerm_resource_group.helium-app.name
-  TFSTATE_RG_NAME     = "${var.NAME}-rg-tf" 
   TENANT_ID           = var.TF_TENANT_ID
   COSMOS_RG_NAME      = azurerm_resource_group.cosmos.name
   COSMOS_URL          = "https://${var.NAME}.documents.azure.com:443/"
