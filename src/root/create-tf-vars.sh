@@ -30,38 +30,38 @@ fi
 
 # create terraform.tfvars and replace template values
 
-cat ../example.tfvars | \
+cat ../example.tfvars > terraform.tfvars
 # replace name
-  sed "s|<<He_Name>>|$He_Name|" | \
+sed "s|<<He_Name>>|$He_Name|" terraform.tfvars terraform.tfvars > terraform.tfvars
 
 # replace location
-  sed "s|<<He_Location>>|$He_Location|" | \
+sed "s|<<He_Location>>|$He_Location|" terraform.tfvars > terraform.tfvars
 
 # replace repo
-  sed "s|<<He_Repo>>|$He_Repo|" | \
+sed "s|<<He_Repo>>|$He_Repo|" terraform.tfvars > terraform.tfvars
 
 # replace email
-  sed "s|<<He_Email>>|$He_Email|" | \
+sed "s|<<He_Email>>|$He_Email|" terraform.tfvars > terraform.tfvars
 
 # replace TF_TENANT_ID
-  sed "s|<<HE_TENANT_ID>>|$(az account show -o tsv --query tenantId)|" | \
+sed "s|<<HE_TENANT_ID>>|$(az account show -o tsv --query tenantId)|" terraform.tfvars > terraform.tfvars
 
 # replace TF_SUB_ID
-  sed "s|<<HE_SUB_ID>>|$(az account show -o tsv --query id)|" | \
+sed "s|<<HE_SUB_ID>>|$(az account show -o tsv --query id)|" terraform.tfvars > terraform.tfvars
 
 # create a service principal
 # replace TF_CLIENT_SECRET
-  sed "s|<<HE_CLIENT_SECRET>>|$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)|" | \
+sed "s|<<HE_CLIENT_SECRET>>|$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)|" terraform.tfvars > terraform.tfvars
 
 # replace TF_CLIENT_ID
-  sed "s|<<HE_CLIENT_ID>>|$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)|" | \
+sed "s|<<HE_CLIENT_ID>>|$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)|" terraform.tfvars > terraform.tfvars
 
 # create a service principal
 # replace ACR_SP_SECRET
-  sed "s|<<HE_ACR_SP_SECRET>>|$(az ad sp create-for-rbac --skip-assignment -n http://${He_Name}-acr-sp --query password -o tsv)|" | \
+sed "s|<<HE_ACR_SP_SECRET>>|$(az ad sp create-for-rbac --skip-assignment -n http://${He_Name}-acr-sp --query password -o tsv)|" terraform.tfvars > terraform.tfvars
 
 # replace ACR_SP_ID
-  sed "s|<<HE_ACR_SP_ID>>|$(az ad sp show --id http://${He_Name}-acr-sp --query appId -o tsv)|" > terraform.tfvars
+sed "s|<<HE_ACR_SP_ID>>|$(az ad sp show --id http://${He_Name}-acr-sp --query appId -o tsv)|" terraform.tfvars > terraform.tfvars
 
 # validate the substitutions
 cat terraform.tfvars
