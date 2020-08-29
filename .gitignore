@@ -1,6 +1,6 @@
 # --------------------------------------------------------------------------------
-# File created using 'AnGitIgnored' extensions for Visual Studio Code: 
-# https://marketplace.visualstudio.com/items?itemName=AnAppWiLos.angitignored 
+# File created using 'AnGitIgnored' extensions for Visual Studio Code:
+# https://marketplace.visualstudio.com/items?itemName=AnAppWiLos.angitignored
 #-------------------------------------------------------------------------------
 
 
@@ -15,7 +15,7 @@
 
 *tfstate*
 *tfplan*
-src/root/main_tf_state.tf
+main_tf_state.tf
 
 .vscode/
 
