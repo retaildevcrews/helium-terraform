@@ -34,20 +34,21 @@ nslookup ${He_Name}.azurecr.io
 ### Set additional values
 
 ```bash
+
 # Set location for resources
 He_Location=centralus
-
-# tenant id of the account
-HE_TENANT_ID=$(az account show -o tsv --query tenantId)
-
-# current subscription id
-HE_SUB_ID=$(az account show -o tsv --query id)
 
 ```
 
 ### Setup terraform backend
 
 ```bash
+
+# tenant id of the account
+HE_TENANT_ID=$(az account show -o tsv --query tenantId)
+
+# current subscription id
+HE_SUB_ID=$(az account show -o tsv --query id)
 
 # create service principal for terraform
 HE_CLIENT_SECRET=$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)
@@ -79,6 +80,7 @@ az storage container create --name $TFSA_CONTAINER --account-name $TFSA_NAME --a
 ### Create terraform config files
 
 ```bash
+
 # save terraform backend definition
 cat <<EOF > ./main_tf_state.tf
 terraform {
@@ -101,6 +103,7 @@ TF_CLIENT_SECRET = "${HE_CLIENT_SECRET}"
 TF_SUB_ID        = "${HE_SUB_ID}"
 TF_TENANT_ID     = "${HE_TENANT_ID}"
 EOF
+
 ```
 
 ### Run terraform
