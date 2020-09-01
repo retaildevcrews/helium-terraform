@@ -28,41 +28,85 @@ then
   export He_Repo=helium-csharp
 fi
 
-# create terraform.tfvars and replace template values
+# create terraform.tfvars
 
-cp ../example.tfvars terraform.tfvars
+cat << EOF > ./terraform.tfvars
 
-# replace name
-ex -s -c "%s/<<He_Name>>/$He_Name/g|x" terraform.tfvars
+NAME             = "$He_Name"
+LOCATION         = "$He_Location"
+REPO             = "$He_Repo"
+EMAIL_FOR_ALERTS = "$He_Email"
+TF_TENANT_ID     = "$(az account show -o tsv --query tenantId)"
+TF_SUB_ID        = "$(az account show -o tsv --query id)"
+TF_CLIENT_SECRET = "$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)"
+TF_CLIENT_ID     = "$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)"
+ACR_SP_SECRET    = "$(az ad sp create-for-rbac --skip-assignment -n http://${He_Name}-acr-sp --query password -o tsv)"
+ACR_SP_ID        = "$(az ad sp show --id http://${He_Name}-acr-sp --query appId -o tsv)"
 
-# replace location
-ex -s -c "%s/<<He_Location>>/$He_Location/g|x" terraform.tfvars
 
-# replace repo
-ex -s -c "%s/<<He_Repo>>/$He_Repo/g|x" terraform.tfvars
+WEBV_INSTANCES = {
+  "<<He_Location>>" = 1000
+  "eastus2"         = 5000
+  "westeurope"      = 15000
+  "southeastasia"   = 30000
+}
+CONTAINER_FILE_NAME = "benchmark.json"
+COSMOS_RU           = "1000"
 
-# replace email
-ex -s -c "%s/<<He_Email>>/$He_Email/g|x" terraform.tfvars
+ALERT_RULES = {
+  rt_alerts = {
+    name        = "response-time-alert"
+    frequency   = "PT15M"
+    window_size = "PT30M"
+    description = "Server Response Time Too High"
+    severity    = 2
+    enabled     = false
+    operator    = "GreaterThan"
+    threshold   = "900"
+    aggregation = "Average"
+    metric_name = "requests/duration"
+  },
+  mr_alerts = {
+    name        = "requests-too-high-alert"
+    frequency   = "PT1M"
+    window_size = "PT15M"
+    description = "Requests Too High"
+    severity    = 2
+    enabled     = false
+    operator    = "GreaterThan"
+    threshold   = "900"
+    aggregation = "Count"
+    metric_name = "requests/count"
+  },
+  wv_alerts = {
+    name        = "requests-too-low-alert"
+    frequency   = "PT1M"
+    window_size = "PT5M"
+    description = "Requests Too Low"
+    severity    = 2
+    enabled     = true
+    operator    = "LessThan"
+    threshold   = "1"
+    aggregation = "Count"
+    metric_name = "requests/count"
+  }
+}
+WEBTEST_ALERT_RULES = {
+  wt_rules = {
+    name        = "web-test-alert"
+    frequency   = "PT5M"
+    window_size = "PT15M"
+    description = "Web Test Alert"
+    severity    = 2
+    enabled     = false
+    operator    = "LessThan"
+    threshold   = "1"
+    aggregation = "Average"
+    metric_name = "availabilityResults/availabilityPercentage"
+  }
+}
 
-# replace TF_TENANT_ID
-ex -s -c "%s/<<HE_TENANT_ID>>/$(az account show -o tsv --query tenantId)/g|x" terraform.tfvars
-
-# replace TF_SUB_ID
-ex -s -c "%s/<<HE_SUB_ID>>/$(az account show -o tsv --query id)/g|x" terraform.tfvars
-
-# create a service principal
-# replace TF_CLIENT_SECRET
-ex -s -c "%s/<<HE_CLIENT_SECRET>>/$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)/g|x" terraform.tfvars
-
-# replace TF_CLIENT_ID
-ex -s -c "%s/<<HE_CLIENT_ID>>/$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)/g|x" terraform.tfvars
-
-# create a service principal
-# replace ACR_SP_SECRET
-ex -s -c "%s/<<HE_ACR_SP_SECRET>>/$(az ad sp create-for-rbac --skip-assignment -n http://${He_Name}-acr-sp --query password -o tsv)/g|x" terraform.tfvars
-
-# replace ACR_SP_ID
-ex -s -c "%s/<<HE_ACR_SP_ID>>/$(az ad sp show --id http://${He_Name}-acr-sp --query appId -o tsv)/g|x" terraform.tfvars
+EOF
 
 # validate the substitutions
 cat terraform.tfvars
