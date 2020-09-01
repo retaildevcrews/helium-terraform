@@ -79,9 +79,9 @@ if echo ${TFSTATE_RG_NAME} > /dev/null 2>&1 && echo ${He_Location} > /dev/null 2
     echo "Created Resource Group: ${TFSTATE_RG_NAME} in ${TF_LOCATION}"
 fi
 
-# create storage account for state file
+# create storage account for state file; storage account name (TFSA_NAME) must be < 24 characters
 export TFSUB_ID=$(az account show -o tsv --query id)
-export TFSA_NAME=tfstate$RANDOM
+export TFSA_NAME=tfstate$He_Name
 echo "Creating State File Storage Account and Container"
 if echo ${TFSUB_ID} > /dev/null 2>&1; then
     if ! az storage account create --resource-group $TFSTATE_RG_NAME --name $TFSA_NAME --sku Standard_LRS --encryption-services blob -o table; then
