@@ -62,8 +62,7 @@ az group create --name ${TFSTATE_RG_NAME} --location ${He_Location} -o table
 
 # set a name for the terraform storage account
 # must be a unique name across all of azure.
-# $RANDOM is used for a better chance of having a unique name.
-TFSA_NAME=tfstate$RANDOM
+TFSA_NAME=tfstate$He_Name
 
 # create storage account for terraform state file
 az storage account create --resource-group $TFSTATE_RG_NAME --name $TFSA_NAME --sku Standard_LRS --encryption-services blob -o table

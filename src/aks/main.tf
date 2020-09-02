@@ -16,3 +16,8 @@ provider "azuread" {
   client_secret   = var.TF_CLIENT_SECRET
   tenant_id       = var.TF_TENANT_ID
 }
+
+resource "azurerm_resource_group" "helium-app" {
+  name     = "${var.NAME}-rg-app"
+  location = var.LOCATION
+}
