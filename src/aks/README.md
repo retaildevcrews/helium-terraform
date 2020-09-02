@@ -84,9 +84,9 @@ cat <<EOF > ./main_tf_state.tf
 terraform {
   required_version = ">= 0.13"
   backend "azurerm" {
-    resource_group_name  = "${TFSTATE_RG_NAME}"
-    storage_account_name = "${TFSA_NAME}"
-    container_name       = "${TFSA_CONTAINER}"
+    resource_group_name  = "$TFSTATE_RG_NAME"
+    storage_account_name = "$TFSA_NAME"
+    container_name       = "$TFSA_CONTAINER"
     key                  = "prod.terraform.tfstate"
   }
 }
@@ -94,12 +94,12 @@ EOF
 
 # save terraform variables
 cat <<EOF > ./terraform.tfvars
-LOCATION         = "${He_Location}"
-NAME             = "${He_Name}"
-TF_CLIENT_ID     = "${HE_CLIENT_ID}"
-TF_CLIENT_SECRET = "${HE_CLIENT_SECRET}"
-TF_SUB_ID        = "${HE_SUB_ID}"
-TF_TENANT_ID     = "${HE_TENANT_ID}"
+LOCATION         = "$He_Location"
+NAME             = "$He_Name"
+TF_CLIENT_ID     = "$HE_CLIENT_ID"
+TF_CLIENT_SECRET = "$HE_CLIENT_SECRET"
+TF_SUB_ID        = "$HE_SUB_ID"
+TF_TENANT_ID     = "$HE_TENANT_ID"
 EOF
 
 ```
