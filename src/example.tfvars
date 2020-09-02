@@ -1,12 +1,14 @@
+NAME             = "<<He_Name>>"
 LOCATION         = "<<He_Location>>"
 REPO             = "<<He_Repo>>"
-NAME             = "<<He_Name>>"
-TF_CLIENT_ID     = "<<HE_CLIENT_ID>>"
-TF_CLIENT_SECRET = "<<HE_CLIENT_SECRET>>"
-TF_SUB_ID        = "<<HE_SUB_ID>>"
+EMAIL_FOR_ALERTS = "<<He_Email>>"
 TF_TENANT_ID     = "<<HE_TENANT_ID>>"
-ACR_SP_ID        = "<<HE_ACR_SP_ID>>"
+TF_SUB_ID        = "<<HE_SUB_ID>>"
+TF_CLIENT_SECRET = "<<HE_CLIENT_SECRET>>"
+TF_CLIENT_ID     = "<<HE_CLIENT_ID>>"
 ACR_SP_SECRET    = "<<HE_ACR_SP_SECRET>>"
+ACR_SP_ID        = "<<HE_ACR_SP_ID>>"
+
 WEBV_INSTANCES = {
   "<<He_Location>>" = 1000
   "eastus2"         = 5000
@@ -15,7 +17,7 @@ WEBV_INSTANCES = {
 }
 CONTAINER_FILE_NAME = "benchmark.json"
 COSMOS_RU           = "1000"
-EMAIL_FOR_ALERTS    = "<<He_Email>>"
+
 ALERT_RULES = {
   rt_alerts = {
     name        = "response-time-alert"
@@ -68,4 +70,3 @@ WEBTEST_ALERT_RULES = {
     metric_name = "availabilityResults/availabilityPercentage"
   }
 }
-
