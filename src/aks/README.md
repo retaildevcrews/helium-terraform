@@ -25,7 +25,6 @@ He_Name=[your unique name]
 az cosmosdb check-name-exists -n ${He_Name}
 
 ### if nslookup doesn't fail to resolve, change He_Name
-nslookup ${He_Name}.azurewebsites.net
 nslookup ${He_Name}.vault.azure.net
 nslookup ${He_Name}.azurecr.io
 
@@ -111,5 +110,16 @@ EOF
 
 # initialize terraform
 terraform init
+
+# validate terraform config
+terraform validate
+
+```
+
+Run terraform. Review the planned changes, and type 'yes' if the plan is what is expected.
+
+```bash
+
+terraform apply
 
 ```
