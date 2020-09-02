@@ -29,9 +29,9 @@ then
 fi
 
 # create terraform.tfvars
+# MAINTAINER NOTE: if changing this file, also change example.tfvars to match
 
 cat << EOF > ./terraform.tfvars
-
 NAME             = "$He_Name"
 LOCATION         = "$He_Location"
 REPO             = "$He_Repo"
@@ -43,9 +43,8 @@ TF_CLIENT_ID     = "$(az ad sp show --id http://${He_Name}-tf-sp --query appId -
 ACR_SP_SECRET    = "$(az ad sp create-for-rbac --skip-assignment -n http://${He_Name}-acr-sp --query password -o tsv)"
 ACR_SP_ID        = "$(az ad sp show --id http://${He_Name}-acr-sp --query appId -o tsv)"
 
-
 WEBV_INSTANCES = {
-  "<<He_Location>>" = 1000
+  "$He_Location"    = 1000
   "eastus2"         = 5000
   "westeurope"      = 15000
   "southeastasia"   = 30000
@@ -105,7 +104,6 @@ WEBTEST_ALERT_RULES = {
     metric_name = "availabilityResults/availabilityPercentage"
   }
 }
-
 EOF
 
 # validate the substitutions
