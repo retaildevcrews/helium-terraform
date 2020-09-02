@@ -23,7 +23,7 @@ assignees: ''
 
 ## Acceptance Criteria
 
-Reference: [Definition of Done](../../docs/EngineeringPractices.md)
+Reference: [Definition of Done](https://github.com/retaildevcrews/helium/blob/main/docs/EngineeringPractices.md)
 
 - [ ] Should "testable condition that should be satisfied"
 - [ ] Should "testable condition that should be satisfied"
