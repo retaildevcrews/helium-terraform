@@ -81,7 +81,7 @@ fi
 
 # create storage account for state file
 export TFSUB_ID=$(az account show -o tsv --query id)
-export TFSA_NAME=tfstate$RANDOM
+export TFSA_NAME=tfstate$He_Name
 echo "Creating State File Storage Account and Container"
 if echo ${TFSUB_ID} > /dev/null 2>&1; then
     if ! az storage account create --resource-group $TFSTATE_RG_NAME --name $TFSA_NAME --sku Standard_LRS --encryption-services blob -o table; then
