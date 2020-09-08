@@ -24,8 +24,8 @@ resource "azurerm_resource_group" "helium-app" {
 
 resource "azurerm_kubernetes_cluster" "helium-aks" {
   name                = "${var.NAME}-aks"
-  location            = var.LOCATION
-  resource_group_name = "${var.NAME}-rg-app"
+  location            = azurerm_resource_group.helium-app.location
+  resource_group_name = azurerm_resource_group.helium-app.name
   dns_prefix          = "${var.NAME}-aks"
 
   default_node_pool {
