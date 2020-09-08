@@ -21,3 +21,24 @@ resource "azurerm_resource_group" "helium-app" {
   name     = "${var.NAME}-rg-app"
   location = var.LOCATION
 }
+
+resource "azurerm_kubernetes_cluster" "helium-aks" {
+  name                = var.NAME
+  location            = azurerm_resource_group.helium-app.location
+  resource_group_name = azurerm_resource_group.helium-app.name
+  dns_prefix          = var.NAME
+
+  default_node_pool {
+    name       = "default"
+    node_count = 3
+    vm_size    = "Standard_D2_v2"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  role_based_access_control {
+    enabled = true
+  }
+}
