@@ -17,16 +17,21 @@ provider "azuread" {
   tenant_id       = var.TF_TENANT_ID
 }
 
+locals {
+  aks-cluster-name = "${var.NAME}-aks"
+  aks-mi-name      = "${var.NAME}-mi"
+}
+
 resource "azurerm_resource_group" "helium-app" {
   name     = "${var.NAME}-rg-app"
   location = var.LOCATION
 }
 
 resource "azurerm_kubernetes_cluster" "helium-aks" {
-  name                = var.NAME
+  name                = local.aks-cluster-name
   location            = azurerm_resource_group.helium-app.location
   resource_group_name = azurerm_resource_group.helium-app.name
-  dns_prefix          = var.NAME
+  dns_prefix          = local.aks-cluster-name
 
   default_node_pool {
     name       = "default"
@@ -41,4 +46,10 @@ resource "azurerm_kubernetes_cluster" "helium-aks" {
   role_based_access_control {
     enabled = true
   }
+}
+
+resource "azurerm_user_assigned_identity" "helium-aks-identity" {
+  name                = local.aks-mi-name
+  location            = azurerm_resource_group.helium-app.location
+  resource_group_name = azurerm_resource_group.helium-app.name
 }
