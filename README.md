@@ -1,6 +1,6 @@
 # Automatically deploy `helium` using terraform
 
-> This repository is used to automatically deploy [helium](https://github.com/retaildevcrew/helium) using [terraform](https://www.hashicorp.com/products/terraform)
+> This repository is used to automatically deploy [helium](https://github.com/retaildevcrews/helium) using [terraform](https://www.hashicorp.com/products/terraform)
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
