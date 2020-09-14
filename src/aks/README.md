@@ -50,7 +50,7 @@ HE_TENANT_ID=$(az account show -o tsv --query tenantId)
 HE_SUB_ID=$(az account show -o tsv --query id)
 
 # create service principal for terraform
-HE_CLIENT_SECRET=$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --query password -o tsv)
+HE_CLIENT_SECRET=$(az ad sp create-for-rbac -n http://${He_Name}-tf-sp --role owner --query password -o tsv)
 
 # client id of terraform service principal
 HE_CLIENT_ID=$(az ad sp show --id http://${He_Name}-tf-sp --query appId -o tsv)
