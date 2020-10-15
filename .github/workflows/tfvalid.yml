@@ -1,5 +1,9 @@
 name: 'Terraform Plan'
 on:
+  # TODO: using this to test my branch. remove before pull request
+  push:
+    branches:
+      - feature/issue-22_fix-ci
   pull_request:
     branches:
       - main
@@ -61,6 +65,6 @@ jobs:
           TF_VAR_WV_OPERATOR: 'LessThan'
           TF_VAR_WV_SEVERITY: '2'
           TF_VAR_WV_FREQUENCY: 'PT5M'
-          TF_VAR_WV_WINDOW_SIZE: 'PT15M':  
+          TF_VAR_WV_WINDOW_SIZE: 'PT15M':
           #Must Create Log Anayltics workspace prior to deployment
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
