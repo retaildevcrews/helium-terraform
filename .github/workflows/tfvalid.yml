@@ -34,7 +34,7 @@ jobs:
           tf_actions_working_dir: 'src/root'
         env:
           TF_VAR_NAME: 'cipool'
-          TF_VAR_LOCATION: 'centraulus'
+          TF_VAR_LOCATION: 'centralus'
           TF_VAR_COSMOS_RU: 1000
           TF_VAR_CONTAINER_FILE_NAME: 'benchmark.json'
           TF_VAR_SLEEP_TIME: 125
@@ -46,27 +46,38 @@ jobs:
           TF_VAR_TF_SUB_ID: '648dcb5a-de1e-48b2-af6b-fe6ef28d355c'
           TF_VAR_ACTION_GROUP_NAME: 'alert_list'
           TF_VAR_EMAIL_FOR_ALERTS: 'test@test.com'
-          TF_VAR_RT_THRESHOLD: '50'
-          TF_VAR_RT_OPERATOR: 'GreaterThan'
-          TF_VAR_RT_SEVERITY: '3'
-          TF_VAR_RT_FREQUENCY: 'PT5M'
-          TF_VAR_RT_WINDOW_SIZE: 'PT15M'
-          TF_VAR_MR_THRESHOLD: '50'
-          TF_VAR_MR_OPERATOR: 'GreaterThan'
-          TF_VAR_MR_SEVERITY: '3'
-          TF_VAR_MR_FREQUENCY: 'PT5M'
-          TF_VAR_MR_WINDOW_SIZE: 'PT15M'
-          TF_VAR_WT_THRESHOLD: '1'
-          TF_VAR_WT_OPERATOR: 'LessThan'
-          TF_VAR_WT_SEVERITY: '2'
-          TF_VAR_WT_FREQUENCY: 'PT5M'
-          TF_VAR_WT_WINDOW_SIZE: 'PT15M'
-          TF_VAR_WV_THRESHOLD: '1'
-          TF_VAR_WV_OPERATOR: 'LessThan'
-          TF_VAR_WV_SEVERITY: '2'
-          TF_VAR_WV_FREQUENCY: 'PT5M'
-          TF_VAR_WV_WINDOW_SIZE: 'PT15M'
-          ACR_SP_ID: 'testingfakevalues'
-          ACR_SP_SECRET: 'testingfakevalues'
+          TF_VAR_ACR_SP_ID: 'testingfakevalues'
+          TF_VAR_ACR_SP_SECRET: 'testingfakevalues'
+          TF_VAR_WEBV_INSTANCES: '{"centralus" = "1000"}'
+          TF_VAR_ALERT_RULES: |-
+            {
+              rt_alerts = {
+                name        = "response-time-alert"
+                frequency   = "PT5M"
+                window_size = "PT15M"
+                description = "Server Response Time Too High"
+                severity    = 3
+                enabled     = false
+                operator    = "GreaterThan"
+                threshold   = "50"
+                aggregation = "Average"
+                metric_name = "requests/duration"
+              }
+            }
+          TF_VAR_WEBTEST_ALERT_RULES: |-
+            {
+              wt_rules = {
+                name        = "web-test-alert"
+                frequency   = "PT5M"
+                window_size = "PT15M"
+                description = "Web Test Alert"
+                severity    = 2
+                enabled     = false
+                operator    = "LessThan"
+                threshold   = "1"
+                aggregation = "Average"
+                metric_name = "availabilityResults/availabilityPercentage"
+              }
+            }
           #Must Create Log Anayltics workspace prior to deployment
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
