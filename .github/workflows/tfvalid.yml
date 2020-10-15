@@ -66,5 +66,7 @@ jobs:
           TF_VAR_WV_SEVERITY: '2'
           TF_VAR_WV_FREQUENCY: 'PT5M'
           TF_VAR_WV_WINDOW_SIZE: 'PT15M'
+          ACR_SP_ID: 'testingfakevalues'
+          ACR_SP_SECRET: 'testingfakevalues'
           #Must Create Log Anayltics workspace prior to deployment
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
