@@ -65,6 +65,6 @@ jobs:
           TF_VAR_WV_OPERATOR: 'LessThan'
           TF_VAR_WV_SEVERITY: '2'
           TF_VAR_WV_FREQUENCY: 'PT5M'
-          TF_VAR_WV_WINDOW_SIZE: 'PT15M':
+          TF_VAR_WV_WINDOW_SIZE: 'PT15M'
           #Must Create Log Anayltics workspace prior to deployment
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
