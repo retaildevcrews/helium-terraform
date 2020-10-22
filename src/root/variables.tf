@@ -4,7 +4,7 @@ variable "NAME" {
 
   validation {
     condition     = length(var.NAME) < 2
-    error_message = "testing validations, this should definitely fail."
+    error_message = "Testing validations, this should definitely fail."
   }
 }
 
