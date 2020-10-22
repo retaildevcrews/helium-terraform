@@ -1,11 +1,6 @@
 variable "NAME" {
   type        = string
   description = "The prefix which should be used for all resources in this example. Used by all modules"
-
-  validation {
-    condition     = length(var.NAME) < 2
-    error_message = "Testing validations, this should definitely fail."
-  }
 }
 
 variable "TF_CLIENT_ID" {

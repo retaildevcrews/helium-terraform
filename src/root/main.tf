@@ -98,7 +98,7 @@ module "web" {
   TF_SUB_ID           = var.TF_SUB_ID
   EMAIL_FOR_ALERTS    = var.EMAIL_FOR_ALERTS
   ALERT_RULES         = var.ALERT_RULES
-  WEBTEST_ALERT_RULES = var.WEBTEST_ALERT_RULES
+  # WEBTEST_ALERT_RULES = var.WEBTEST_ALERT_RULES
 }
 
 module "aci" {
