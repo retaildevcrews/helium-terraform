@@ -1,7 +1,7 @@
 resource "azurerm_monitor_action_group" "cosmos-action-group" {
-  name                      = "cosmos-action-group"
-  resource_group_name       = var.COSMOS_RG_NAME
-  short_name                = var.NAME
+  name                = "cosmos-action-group"
+  resource_group_name = var.COSMOS_RG_NAME
+  short_name          = var.NAME
   email_receiver {
     name                    = "${var.NAME}-alert-receiver"
     email_address           = var.EMAIL_FOR_ALERTS
@@ -10,7 +10,7 @@ resource "azurerm_monitor_action_group" "cosmos-action-group" {
 }
 
 resource "azurerm_monitor_metric_alert" "cosmos-alert" {
-  depends_on          = [ null_resource.imdb-import ]
+  depends_on          = [null_resource.imdb-import]
   name                = "${var.NAME}-cosmos-throttle-alert"
   resource_group_name = var.COSMOS_RG_NAME
   scopes              = [azurerm_cosmosdb_account.cosmosdb.id]
@@ -27,12 +27,12 @@ resource "azurerm_monitor_metric_alert" "cosmos-alert" {
     operator         = "GreaterThan"
     threshold        = "0"
     dimension {
-      name            = "StatusCode"
-      operator        = "Include"
-      values          = ["429"]
+      name     = "StatusCode"
+      operator = "Include"
+      values   = ["429"]
     }
   }
   action {
-    action_group_id   = azurerm_monitor_action_group.cosmos-action-group.id
+    action_group_id = azurerm_monitor_action_group.cosmos-action-group.id
   }
 }
