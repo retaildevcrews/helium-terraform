@@ -26,11 +26,11 @@ jobs:
           tf_actions_working_dir: 'src/root'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 'Terraform Plan'
+      - name: 'Terraform Validate'
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_version: 0.13.0
-          tf_actions_subcommand: 'plan'
+          tf_actions_subcommand: 'validate'
           tf_actions_working_dir: 'src/root'
         env:
           TF_VAR_NAME: 'cipool'
@@ -46,8 +46,8 @@ jobs:
           TF_VAR_TF_SUB_ID: '648dcb5a-de1e-48b2-af6b-fe6ef28d355c'
           TF_VAR_ACTION_GROUP_NAME: 'alert_list'
           TF_VAR_EMAIL_FOR_ALERTS: 'test@test.com'
-          TF_VAR_ACR_SP_ID: 'testingfakevalues'
-          TF_VAR_ACR_SP_SECRET: 'testingfakevalues'
+          TF_VAR_ACR_SP_ID: '00000000-0000-0000-0000-000000000000'
+          TF_VAR_ACR_SP_SECRET: 'testvalue'
           TF_VAR_WEBV_INSTANCES: '{"centralus" = "1000"}'
           TF_VAR_ALERT_RULES: |-
             {
