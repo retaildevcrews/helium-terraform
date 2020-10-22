@@ -1,4 +1,4 @@
-name: 'Terraform Plan'
+name: 'Terraform Validate'
 on:
   pull_request:
     branches:
