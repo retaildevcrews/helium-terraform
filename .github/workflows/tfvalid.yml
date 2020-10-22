@@ -1,9 +1,5 @@
 name: 'Terraform Plan'
 on:
-  # TODO: using this to test my branch. remove before pull request
-  push:
-    branches:
-      - feature/issue-22_fix-ci
   pull_request:
     branches:
       - main
