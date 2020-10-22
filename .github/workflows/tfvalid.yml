@@ -48,7 +48,8 @@ jobs:
           TF_VAR_EMAIL_FOR_ALERTS: 'test@test.com'
           TF_VAR_ACR_SP_ID: '00000000-0000-0000-0000-000000000000'
           TF_VAR_ACR_SP_SECRET: 'testvalue'
-          TF_VAR_WEBV_INSTANCES: '{"centralus" = "1000"}'
+          # TF_VAR_WEBV_INSTANCES: '{"centralus" = "1000"}'
+          TF_VAR_WEBV_INSTANCES: 'testingvalidation'
           TF_VAR_ALERT_RULES: |-
             {
               rt_alerts = {
