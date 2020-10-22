@@ -80,24 +80,24 @@ module "db" {
 module "web" {
   source = "../modules/webapp"
 
-  NAME                = var.NAME
-  LOCATION            = var.LOCATION
-  REPO                = var.REPO
-  ACR_SP_ID           = var.ACR_SP_ID
-  ACR_SP_SECRET       = var.ACR_SP_SECRET
-  APP_RG_NAME         = azurerm_resource_group.helium-app.name
-  TENANT_ID           = var.TF_TENANT_ID
-  COSMOS_RG_NAME      = azurerm_resource_group.cosmos.name
-  COSMOS_URL          = "https://${var.NAME}.documents.azure.com:443/"
-  COSMOS_KEY          = module.db.ro_key
-  COSMOS_DB           = var.COSMOS_DB
-  COSMOS_COL          = var.COSMOS_COL
-  IMDB_IMPORT_DONE    = "${module.db.IMDB_IMPORT_DONE}"
-  APP_SERVICE_DONE    = "${module.web.APP_SERVICE_DONE}"
-  ACI_DONE            = "${module.aci.ACI_DONE}"
-  TF_SUB_ID           = var.TF_SUB_ID
-  EMAIL_FOR_ALERTS    = var.EMAIL_FOR_ALERTS
-  ALERT_RULES         = var.ALERT_RULES
+  NAME             = var.NAME
+  LOCATION         = var.LOCATION
+  REPO             = var.REPO
+  ACR_SP_ID        = var.ACR_SP_ID
+  ACR_SP_SECRET    = var.ACR_SP_SECRET
+  APP_RG_NAME      = azurerm_resource_group.helium-app.name
+  TENANT_ID        = var.TF_TENANT_ID
+  COSMOS_RG_NAME   = azurerm_resource_group.cosmos.name
+  COSMOS_URL       = "https://${var.NAME}.documents.azure.com:443/"
+  COSMOS_KEY       = module.db.ro_key
+  COSMOS_DB        = var.COSMOS_DB
+  COSMOS_COL       = var.COSMOS_COL
+  IMDB_IMPORT_DONE = "${module.db.IMDB_IMPORT_DONE}"
+  APP_SERVICE_DONE = "${module.web.APP_SERVICE_DONE}"
+  ACI_DONE         = "${module.aci.ACI_DONE}"
+  TF_SUB_ID        = var.TF_SUB_ID
+  EMAIL_FOR_ALERTS = var.EMAIL_FOR_ALERTS
+  ALERT_RULES      = var.ALERT_RULES
   # WEBTEST_ALERT_RULES = var.WEBTEST_ALERT_RULES
 }
 
