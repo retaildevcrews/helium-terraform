@@ -13,7 +13,7 @@
 * export TF_VAR_TF_SUB_ID="gy6tgh5t-9876-3uud-87y3-r5ygytd6uuyr"
 * export TF_VAR_TF_TENANT_ID="frf34ft5-gtfv-wr34-343fw-hfgtry657uk8"
 * export TF_VAR_TF_CLIENT_ID="ju76y5h8-98uh-oin8-n7ui-ger43k87d5nl"
-* export TF_VAR_TF_CLIENT_SECRET="kjbh89098hhiuovvdh6j8uiop="
+* export TF_VAR_TF_CLIENT_SECRET="<client-secret-value>"
 * ```
 */
 
