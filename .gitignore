@@ -1,0 +1,50 @@
+# --------------------------------------------------------------------------------
+# File created using 'AnGitIgnored' extensions for Visual Studio Code:
+# https://marketplace.visualstudio.com/items?itemName=AnAppWiLos.angitignored
+#-------------------------------------------------------------------------------
+
+
+# Created by https://www.gitignore.io/api/terraform
+# Edit at https://www.gitignore.io/?templates=terraform
+
+### Terraform ###
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+
+*tfstate*
+*tfplan*
+main_tf_state.tf
+
+.vscode/
+
+# Crash log files
+crash.log
+
+# Ignore any .tfvars files that are generated automatically for each Terraform run. Most
+# .tfvars files are managed as part of configuration and so should be included in
+# version control.
+#
+terraform.tfvars
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+# !example_override.tf
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*
+
+# End of https://www.gitignore.io/api/terraform
+
+# Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
+static_build
+.idea
+
+.DS_Store
