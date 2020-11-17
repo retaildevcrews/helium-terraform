@@ -96,6 +96,9 @@ terraform init
 # validate
 terraform validate
 
+# plan
+terraform plan
+
 # If you have no errors you can create the resources
 terraform apply -auto-approve
 
