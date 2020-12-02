@@ -3,7 +3,7 @@
 *
 * This module is used to create the webvalidate instances needed for End to End testing of the [Helium](https://github.com/retaildevcrews/helium) Application stack
 *
-* Visit the [webvalidate](https://github.com/retaildevcrews/webvalidate) project for more information on how it works
+* Visit the [webvalidate](https://github.com/microsoft/webvalidate) project for more information on how it works
 *
 * Example usage and testing
 *
